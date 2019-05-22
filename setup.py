@@ -53,6 +53,10 @@ except(IOError, ImportError):
 requirements = [
     'mxnet==1.4.1',
     'numpy',
+    'scipy',
+    'matplotlib',
+    'requests',
+    'ConfigSpace',
     'nose',
 ]
 
