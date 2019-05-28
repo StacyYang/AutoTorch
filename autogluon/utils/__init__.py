@@ -1,1 +1,1 @@
-from .resource import *
+from .files import *

@@ -56,6 +56,8 @@ requirements = [
     'scipy',
     'matplotlib',
     'requests',
+    'dask',
+    'tornado',
     'ConfigSpace',
     'nose',
 ]
