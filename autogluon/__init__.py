@@ -1,3 +1,3 @@
 from .basic import *
-from . import scheduler, distribution, searcher, dist, resource
 from .utils import *
+from . import scheduler, searcher, distributed, resource
