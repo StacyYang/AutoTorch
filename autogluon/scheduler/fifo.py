@@ -30,8 +30,9 @@ class FIFO_Scheduler(TaskScheduler):
             with `time_attr`, this may refer to any objective value. Stopping
             procedures will use this attribute.
     """
-    def __init__(self, train_fn, args, resource, searcher, checkpoint=None,
-                 resume=False, num_trials=None, time_attr='epoch', reward_attr='accuracy'):
+    def __init__(self, train_fn, args, resource, searcher, checkpoint='./exp/checkerpoint.ag',
+                 resume=False, num_trials=None, time_attr='epoch', reward_attr='accuracy',
+                 visualizer='tensorboard'):
         super(FIFO_Scheduler, self).__init__()
         self.train_fn = train_fn
         self.args = args
@@ -83,6 +84,9 @@ class FIFO_Scheduler(TaskScheduler):
         logger.info('Num of Pending Tasks is {}'.format(self.num_trials - self.num_finished_tasks))
         for i in range(self.num_finished_tasks, self.num_trials):
             self.schedule_next()
+        self.visualizer.export_scalars('{}.json'.format(
+            os.path.join(os.path.splitext(self._checkpoint)[0], 'logs')))
+        self.visualizer.close()
 
     def save(self, checkpoint=None):
         if checkpoint is None and self._checkpoint is None:
@@ -149,7 +153,17 @@ class FIFO_Scheduler(TaskScheduler):
                 if checkpoint_semaphore is not None:
                     checkpoint_semaphore.release()
                 break
-            self.add_training_result(task.task_id, reported_result[self._reward_attr])
+
+            if 'loss' in reported_result:
+                self.visualizer.add_scalar(tag='loss',
+                                           value=('task %d valid_loss' % task.task_id,
+                                                  reported_result['loss']),
+                                           global_step=reported_result['epoch'])
+            self.visualizer.add_scalar(tag=self._reward_attr,
+                                       value=('task {task_id} {reward_attr}'.format(
+                                              task_id=task.task_id, reward_attr=self._reward_attr),
+                                              reported_result[self._reward_attr]),
+                                       global_step=reported_result['epoch'])
             reporter.move_on()
             last_result = reported_result
         searcher.update(task.args['config'], last_result[self._reward_attr])
