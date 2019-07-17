@@ -66,8 +66,6 @@ class FIFO_Scheduler(TaskScheduler):
         self._checkpoint = checkpoint
         self._time_attr = time_attr
         self._reward_attr = reward_attr
-<<<<<<< HEAD
-=======
         self.visualizer = visualizer.lower()
         if self.visualizer == 'tensorboard' or self.visualizer == 'mxboard':
             try_import_mxboard()
@@ -76,7 +74,6 @@ class FIFO_Scheduler(TaskScheduler):
                 logdir=os.path.join(os.path.splitext(checkpoint)[0], 'logs'),
                 flush_secs=3,
                 verbose=False)
->>>>>>> 9c205ac... Distributed FIFO and Bug Fix (#39)
         self.log_lock = mp.Lock()
         self.training_history = OrderedDict()
         if resume:
@@ -86,29 +83,6 @@ class FIFO_Scheduler(TaskScheduler):
                 msg = 'checkpoint path {} is not available for resume.'.format(checkpoint)
                 logger.exception(msg)
                 raise FileExistsError(msg)
-
-    def add_training_result(self, task_id, reward):
-        with self.log_lock:
-            if task_id in self.training_history:
-                self.training_history[task_id].append(reward)
-            else:
-                self.training_history[task_id] = [reward]
-
-    def get_training_curves(self, filename=None, plot=False, use_legend=True):
-        if filename is None and not plot:
-            logger.warning('Please either provide filename or allow plot in get_training_curves')
-        import matplotlib.pyplot as plt
-        plt.ylabel(self._reward_attr)
-        plt.xlabel(self._time_attr)
-        for task_id, task_res in self.training_history.items():
-            x = list(range(len(task_res)))
-            plt.plot(x, task_res, label='task {}'.format(task_id))
-        if use_legend:
-            plt.legend(loc='best')
-        if filename is not None:
-            logger.info('Saving Training Curve in {}'.format(filename))
-            plt.savefig(filename)
-        if plot: plt.show()
 
     def run(self, num_trials=None):
         """Run multiple number of trials
@@ -164,10 +138,6 @@ class FIFO_Scheduler(TaskScheduler):
                 sp = threading.Thread(target=self._run_checkpoint, args=(checkpoint_semaphore,),
                                       daemon=False)
                 sp.start()
-<<<<<<< HEAD
-            self.scheduler_tasks.append({'TASK_ID': task.task_id, 'Config': task.args['config'],
-                                         'Process': tp, 'ReporterProcess': rp})
-=======
                 task_dict['CheckpointThead'] = sp
             self.scheduled_tasks.append(task_dict)
 
@@ -176,7 +146,6 @@ class FIFO_Scheduler(TaskScheduler):
         for i, task_dict in enumerate(self.scheduled_tasks):
             task_dict['Process'].join()
             task_dict['ReporterThread'].join()
->>>>>>> 9c205ac... Distributed FIFO and Bug Fix (#39)
 
     def _cleaning_tasks(self):
         with self.LOCK:
@@ -265,3 +234,4 @@ class FIFO_Scheduler(TaskScheduler):
         if self.visualizer == 'mxboard' or self.visualizer == 'tensorboard':
             self.mxboard._scalar_dict = json.loads(state_dict['visualizer'])
         logger.debug('Loading Searcher State {}'.format(self.searcher))
+
