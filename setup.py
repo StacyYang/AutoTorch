@@ -42,7 +42,6 @@ class develop(setuptools.command.develop.develop):
     def run(self):
         create_version_file()
         setuptools.command.develop.develop.run(self)
-        #subprocess.check_call("python tests/unit_test.py".split())
 
 try:
     import pypandoc
@@ -71,7 +70,7 @@ setup(
     long_description=readme,
     license='MIT',
     install_requires=requirements,
-    packages=find_packages(exclude=["tests", "examples"]),
+    packages=find_packages(exclude=["docs", "tests", "examples"]),
     package_data={'autogluon': [
         'LICENSE',
     ]},
