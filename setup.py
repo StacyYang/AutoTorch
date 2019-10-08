@@ -55,10 +55,15 @@ requirements = [
     'scipy',
     'matplotlib',
     'requests',
-    'dask',
+    'pytest',
+    'dask[complete]==2.0.0',
     'tornado',
     'ConfigSpace',
     'nose',
+    'gluoncv',
+    'gluonnlp',
+    'graphviz',
+    'scikit-optimize',
 ]
 
 setup(
