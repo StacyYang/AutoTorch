@@ -50,15 +50,18 @@ except(IOError, ImportError):
     readme = open('README.md').read()
 
 requirements = [
-    'mxnet==1.4.1',
+    'tqdm',
     'numpy',
+    'cython',
     'scipy',
     'matplotlib',
     'requests',
     'pytest',
-    'dask[complete]==2.0.0',
+    'paramiko==2.5.0',
+    'distributed==2.6.0',
+    'dask[complete]==2.6.0',
     'tornado',
-    'ConfigSpace',
+    'ConfigSpace==0.4.10',
     'nose',
     'gluoncv',
     'gluonnlp',

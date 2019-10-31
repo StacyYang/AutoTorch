@@ -5,4 +5,4 @@ from .version import __version__
 
 from .utils import *
 from .core import *
-from . import scheduler, searcher, distributed
+from . import scheduler, searcher, distributed, nas, utils
