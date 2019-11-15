@@ -1,8 +1,8 @@
-"""2. Setup Distributed Machines
-=============================
+Setup Distributed Machines
+==========================
 
 This is a quick tutorial for setting up AutoGluon with Distributed Training.
-AutoGluon automatically schedule tasks onto remote machines, just like local one.
+AutoGluon automatically schedule tasks onto remote machines, just like the local one.
 AutoGluon handles the communications and provides the same experience of
 a big machine with many GPUs.
 
@@ -51,73 +51,61 @@ Then we may use EC2 AMI to clone as many worker machines as you want.
 Resource Management
 -------------------
 
-.. image:: ../../../_static/img/distributed_resource_manager.png
+.. image:: https://raw.githubusercontent.com/zhanghang1989/AutoGluonWebdata/master/doc/api/autogluon_distributed.png
 
 
 A Toy Example
 -------------
 
-"""
+.. admonition:: Example
 
-import time
-import numpy as np
-import autogluon as ag
-from autogluon.basic import autogluon_register_args
-from autogluon.resource import DistributedResource
+    Import the packages:
 
-################################################################
-# Construct a fake training function for demo
-#
+    >>> import time
+    >>> import numpy as np
+    >>> import autogluon as ag
 
-@autogluon_register_args(
-    batch_size=64,
-    lr=ag.LogLinearSpace(1e-4, 1e-1),
-    momentum=0.9,
-    wd=ag.LinearSpace(1e-4, 5e-4),
-    )
-def train_fn(args, reporter):
-    print('task_id: {}, lr: {}'.format(args.task_id, args.lr))
-    for e in range(10):
-        top1_accuracy = 1 - np.power(1.8, -np.random.uniform(e, 2*e))
-        reporter(epoch=e, accuracy=top1_accuracy)
-    # wait for 1 sec
-    time.sleep(1.0)
+    Construct a fake training function for demo
 
-################################################################
-# Create a Random Searcher
-#
+    >>> @ag.args(
+    >>>     batch_size=64,
+    >>>     lr=ag.LogLinearSpace(1e-4, 1e-1),
+    >>>     momentum=0.9,
+    >>>     wd=ag.LinearSpace(1e-4, 5e-4),
+    >>>     )
+    >>> def train_fn(args, reporter):
+    >>>     print('task_id: {}, lr: {}'.format(args.task_id, args.lr))
+    >>>     for e in range(10):
+    >>>         top1_accuracy = 1 - np.power(1.8, -np.random.uniform(e, 2*e))
+    >>>         reporter(epoch=e, accuracy=top1_accuracy)
+    >>>     # wait for 1 sec
+    >>>     time.sleep(1.0)
 
-searcher = ag.searcher.RandomSampling(train_fn.cs)
-print( searcher.get_config())
+    Create a Random Searcher
 
-################################################################
-# Provide a list of ip addresses for remote machines
-#
+    >>> searcher = ag.searcher.RandomSampling(train_fn.cs)
+    >>> print(searcher.get_config())
 
-extra_node_ips = ['172.31.3.95']
+    Provide a list of ip addresses for remote machines
 
-################################################################
-# Create a distributed scheduler. If no ipaddresses are provided, 
-# scheduler will only use the local resources
-#
+    >>> extra_node_ips = ['172.31.3.95']
 
-scheduler = ag.distributed.DistributedFIFOScheduler(
-    train_fn, train_fn.args,
-    resource={'num_cpus': 2, 'num_gpus': 1},
-    searcher=searcher,
-    dist_ip_addrs=extra_node_ips)
-print(scheduler)
+    Create a distributed scheduler. If no ipaddresses are provided, 
+    scheduler will only use the local resources
 
-################################################################
-# Launch 16 Tasks
-#
+    >>> scheduler = ag.distributed.DistributedFIFOScheduler(
+    >>>     train_fn, train_fn.args,
+    >>>     resource={'num_cpus': 2, 'num_gpus': 1},
+    >>>     searcher=searcher,
+    >>>     dist_ip_addrs=extra_node_ips)
+    >>> print(scheduler)
 
-scheduler.run(16)
-scheduler.join_tasks()
+    Launch 16 Tasks
 
-################################################################
-# Plot the results and shut down (required for distributed version)
-#
+    >>> scheduler.run(16)
+    >>> scheduler.join_jobs()
 
-scheduler.get_training_curves()
-scheduler.shutdown()
+    Plot the results and exit.
+
+    >>> scheduler.get_training_curves()
+    >>> ag.done()
