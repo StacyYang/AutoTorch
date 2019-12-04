@@ -72,6 +72,6 @@ Neural Architecture Search
    :hidden:
 
    course/index
-   image_classification/index
+
    customize/index
    nas/index

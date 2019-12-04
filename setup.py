@@ -85,6 +85,8 @@ try:
 except(IOError, ImportError):
     readme = open('README.md').read()
 
+MIN_PYTHON_VERSION = '>=3.6.*'
+
 requirements = [
     'tqdm',
     'numpy',
@@ -96,10 +98,7 @@ requirements = [
     'paramiko==2.5.0',
     'ConfigSpace==0.4.10',
     'nose',
-    'gluoncv',
-    'gluonnlp',
     'graphviz',
-    'scikit-optimize',
 ]
 
 setup(
@@ -111,7 +110,11 @@ setup(
     long_description=readme,
     license='MIT',
     install_requires=requirements,
+<<<<<<< HEAD
     packages=find_packages(exclude=["docs", "tests", "examples"]),
+=======
+    python_requires=MIN_PYTHON_VERSION,
+>>>>>>> 49ef052... Bug Bash Patch (#94)
     package_data={'autogluon': [
         'LICENSE',
     ]},
