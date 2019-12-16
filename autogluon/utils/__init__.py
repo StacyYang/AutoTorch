@@ -8,6 +8,7 @@ from .deprecate import *
 from .try_import import *
 from .edict import EasyDict
 from .serialization import *
+from .sync_remote import *
 from .custom_queue import Queue
 from .file_helper import generate_csv
 from .plot_network import plot_network
