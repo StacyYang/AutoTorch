@@ -98,7 +98,6 @@ requirements = [
     'paramiko==2.5.0',
     'ConfigSpace==0.4.10',
     'nose',
-    'graphviz',
 ]
 
 setup(
@@ -110,16 +109,17 @@ setup(
     long_description=readme,
     license='MIT',
     install_requires=requirements,
-<<<<<<< HEAD
     packages=find_packages(exclude=["docs", "tests", "examples"]),
-=======
-    python_requires=MIN_PYTHON_VERSION,
->>>>>>> 49ef052... Bug Bash Patch (#94)
     package_data={'autogluon': [
         'LICENSE',
     ]},
     cmdclass={
         'install': install,
         'develop': develop,
+    },
+    entry_points={
+        'console_scripts': [
+            'agremote = autogluon.scheduler.remote.cli:main',
+        ]
     },
 )

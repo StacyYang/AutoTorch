@@ -14,55 +14,80 @@ __all__ = ['Remote']
 
 logger = logging.getLogger(__name__)
 
+_global_remote_services = weakref.WeakValueDictionary()
+_global_service_index = [0]
+
+def _get_global_remote_service():
+    L = sorted(list(_global_remote_services), reverse=True)
+    for k in L:
+        c = _global_remote_services[k]
+        if c.status != "closed":
+            return c
+        else:
+            del _global_remote_services[k]
+    del L
+    return None
+
+def _set_global_remote_service(c):
+    if c is not None:
+        _global_remote_services[_global_service_index[0]] = c
+        _global_service_index[0] += 1
+
+def _close_global_remote_services():
+    """
+    Force close of global client.  This cleans up when a client
+    wasn't close explicitly, e.g. interactive sessions.
+    """
+    c = _get_global_remote_service()
+    if c is not None:
+        c.shutdown()
+
+class Service(object):
+    def __init__(self, proc):
+        self.proc = proc
+        self.status = 'live'
+
+    def shutdown(self):
+        self.proc.kill()
+
+def start_service(remote_ip, port):
+    cmd = ['agremote', '--address', remote_ip, '--port', str(port)]
+    proc = subprocess.Popen(cmd)
+    return Service(proc)
+
 class Remote(Client):
     LOCK = mp.Lock()
     REMOTE_ID = mp.Value('i', 0)
     def __init__(self, remote_ip=None, port=None, local=False, ssh_username=None,
-            ssh_port=22, ssh_private_key=None, remote_python=None,
-            remote_dask_worker="distributed.cli.dask_worker"):
+            ssh_port=22, ssh_private_key=None, remote_python=None):
         self.service = None
-        if not local:
-            remote_addr = (remote_ip + ':{}'.format(port))
-            self.service = DaskRemoteService(remote_ip, port, ssh_username,
-                                             ssh_port, ssh_private_key, remote_python,
-                                             remote_dask_worker)
-            super(Remote, self).__init__(remote_addr)
-        else:
+        if local:
             super(Remote, self).__init__(processes=False)
+        else:
+            remote_addr = (remote_ip + ':{}'.format(port))
+            self.service = start_service(remote_ip, port)
+            super(Remote, self).__init__(remote_addr)
         with Remote.LOCK:
             self.remote_id = Remote.REMOTE_ID.value
             Remote.REMOTE_ID.value += 1
 
+    def close(self, timeout=2):
+        if self.service:
+            self.service.shutdown()
+        super().close(timeout)
+
     def upload_files(self, files, **kwargs):
         for filename in files:
             self.upload_file(filename, **kwargs)
-
-    def shutdown(self):
-        super().shutdown()
-        self.close(timeout=2)
-        if self.service:
-            self.service.shutdown()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *args):
-        self.shutdown()
-
-    @classmethod
-    def create_local_node(cls, ip, port):
-        return cls(ip, port, local=True)
 
     def __repr__(self):
         reprstr = self.__class__.__name__ + ' REMOTE_ID: {}, \n\t'.format(self.remote_id) + \
             super(Remote, self).__repr__()
         return reprstr
 
-
 class DaskRemoteService(object):
     def __init__(self, remote_addr, scheduler_port, ssh_username=None,
-        ssh_port=22, ssh_private_key=None, remote_python=None,
-        remote_dask_worker="distributed.cli.dask_worker"):
+        ssh_port=22, ssh_private_key=None, remote_python=None):
 
         self.scheduler_addr = remote_addr
         self.scheduler_port = scheduler_port
@@ -71,7 +96,6 @@ class DaskRemoteService(object):
         self.ssh_port = ssh_port
         self.ssh_private_key = ssh_private_key
         self.remote_python = remote_python
-        self.remote_dask_worker = remote_dask_worker
         self.monitor_thread = Thread()
 
         # Start the scheduler node
@@ -92,7 +116,6 @@ class DaskRemoteService(object):
             self.ssh_port,
             self.ssh_private_key,
             self.remote_python,
-            self.remote_dask_worker,
         )
         self.start_monitoring()
 
@@ -110,9 +133,12 @@ class DaskRemoteService(object):
                     while not process["output_queue"].empty():
                         try:
                             msg = process["output_queue"].get()
-                            if 'distributed.' not in msg:
-                                print(msg)
-                        except Exception:
+                            if 'distributed.' in msg:
+                                msg = msg.replace('distributed', 'autogluon')
+
+                            print(msg)
+                        except Exception as e:
+                            print(f'Exception happend {e}, terminating the remote.')
                             break
                 # Kill some time and free up CPU
                 time.sleep(0.1)
@@ -128,8 +154,5 @@ class DaskRemoteService(object):
             process["input_queue"].put("shutdown")
             process["thread"].join()
 
-    def __enter__(self):
-        return self
 
-    def __exit__(self, *args):
-        self.shutdown()
+atexit.register(_close_global_remote_services)
