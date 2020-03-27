@@ -163,6 +163,11 @@ class FIFOScheduler(TaskScheduler):
         # Allow for the promotion of a previously chosen config. Also,
         # extra_kwargs contains extra info passed to both add_job and to
         # get_config (if no config is promoted)
+
+        # request resource first
+        resources = DistributedResource(**self.resource)
+        FIFOScheduler.RESOURCE_MANAGER._request(resources)
+
         config, extra_kwargs = self._promote_config()
         if config is None:
             # No config to promote: Query next config to evaluate from searcher
@@ -171,8 +176,11 @@ class FIFOScheduler(TaskScheduler):
         else:
             # This is not a new config, but a paused one which is now promoted
             extra_kwargs['new_config'] = False
-        task = Task(self.train_fn, {'args': self.args, 'config': config},
-                    DistributedResource(**self.resource))
+        task = Task(
+            self.train_fn,
+            {'args': self.args, 'config': config},
+            resources
+        )
         self.add_job(task, **extra_kwargs)
 
     def run_with_config(self, config):
@@ -212,7 +220,8 @@ class FIFOScheduler(TaskScheduler):
             - milestone: config promoted to this milestone (next from resume_from)
         """
         cls = FIFOScheduler
-        cls.RESOURCE_MANAGER._request(task.resources)
+        if not task.resources.is_ready:
+            cls.RESOURCE_MANAGER._request(task.resources)
         # reporter
         reporter = DistStatusReporter(remote=task.resources.node)
         task.args['reporter'] = reporter
