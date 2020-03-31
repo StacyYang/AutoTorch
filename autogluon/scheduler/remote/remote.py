@@ -48,7 +48,7 @@ class Service(object):
         self.status = 'live'
 
     def shutdown(self):
-        self.proc.kill()
+        os.killpg(os.getpgid(self.proc.pid), signal.SIGTERM)
 
 def start_service(remote_ip, port):
     cmd = ['agremote', '--address', remote_ip, '--port', str(port)]
@@ -62,11 +62,14 @@ class Remote(Client):
             ssh_port=22, ssh_private_key=None, remote_python=None):
         self.service = None
         if local:
-            super(Remote, self).__init__(processes=False)
+            super().__init__(processes=False)
         else:
             remote_addr = (remote_ip + ':{}'.format(port))
             self.service = start_service(remote_ip, port)
-            super(Remote, self).__init__(remote_addr)
+            _set_global_remote_service(self.service)
+            import time
+            time.sleep(10)
+            super().__init__(remote_addr)
         with Remote.LOCK:
             self.remote_id = Remote.REMOTE_ID.value
             Remote.REMOTE_ID.value += 1
@@ -75,6 +78,7 @@ class Remote(Client):
         if self.service:
             self.service.shutdown()
         super().close(timeout)
+        self.shutdown()
 
     def upload_files(self, files, **kwargs):
         for filename in files:
