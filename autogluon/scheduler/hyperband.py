@@ -19,8 +19,8 @@ class HyperbandScheduler(FIFOScheduler):
     r"""Implements different variants of asynchronous Hyperband
 
     See 'type' for the different variants. One implementation detail is when
-    using multiple brackets, task allocation to bracket is done randomly with
-    over a softmax probability.
+    using multiple brackets, task allocation to bracket is done randomly 
+    based on a softmax probability.
 
     Parameters
     ----------
@@ -129,7 +129,7 @@ class HyperbandScheduler(FIFOScheduler):
                  dist_ip_addrs=None,
                  keep_size_ratios=False,
                  maxt_pending=False):
-        super(HyperbandScheduler, self).__init__(
+        super().__init__(
             train_fn=train_fn, args=args, resource=resource, searcher=searcher,
             search_options=search_options, checkpoint=checkpoint, resume=resume,
             num_trials=num_trials, time_out=time_out, max_reward=max_reward, time_attr=time_attr,
@@ -288,7 +288,7 @@ class HyperbandScheduler(FIFOScheduler):
         --------
         >>> ag.save(scheduler.state_dict(), 'checkpoint.ag')
         """
-        destination = super(HyperbandScheduler, self).state_dict(destination)
+        destination = super().state_dict(destination)
         destination['terminator'] = pickle.dumps(self.terminator)
         return destination
 
@@ -299,7 +299,7 @@ class HyperbandScheduler(FIFOScheduler):
         --------
         >>> scheduler.load_state_dict(ag.load('checkpoint.ag'))
         """
-        super(HyperbandScheduler, self).load_state_dict(state_dict)
+        super().load_state_dict(state_dict)
         self.terminator = pickle.loads(state_dict['terminator'])
         logger.info('Loading Terminator State {}'.format(self.terminator))
 

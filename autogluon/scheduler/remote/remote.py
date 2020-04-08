@@ -1,6 +1,8 @@
 import os
 import time
 import signal
+import atexit
+import weakref
 import logging
 import subprocess
 import concurrent
@@ -86,7 +88,7 @@ class Remote(Client):
 
     def __repr__(self):
         reprstr = self.__class__.__name__ + ' REMOTE_ID: {}, \n\t'.format(self.remote_id) + \
-            super(Remote, self).__repr__()
+            super().__repr__()
         return reprstr
 
 class DaskRemoteService(object):
@@ -122,11 +124,13 @@ class DaskRemoteService(object):
             self.remote_python,
         )
         self.start_monitoring()
+        self.status = "live"
 
     def start_monitoring(self):
         if self.monitor_thread.is_alive():
             return
         self.monitor_thread = Thread(target=self.monitor_remote_processes)
+        #self.monitor_thread.daemon = True
         self.monitor_thread.start()
 
     def monitor_remote_processes(self):
@@ -151,12 +155,11 @@ class DaskRemoteService(object):
             pass
 
     def shutdown(self):
-        import tornado
         all_processes = [self.worker, self.scheduler]
 
         for process in all_processes:
             process["input_queue"].put("shutdown")
             process["thread"].join()
-
+        self.status = "closed"
 
 atexit.register(_close_global_remote_services)
