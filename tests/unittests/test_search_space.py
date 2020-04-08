@@ -1,35 +1,35 @@
 import logging
 import numpy as np
-import autogluon as ag
+import autotorch as at
 
-@ag.obj(
-    name=ag.space.Categorical('auto', 'gluon'),
+@at.obj(
+    name=at.space.Categorical('auto', 'torch'),
 )
 class myobj:
     def __init__(self, name):
         self.name = name
 
-@ag.func(
-    framework=ag.space.Categorical('mxnet', 'pytorch'),
+@at.func(
+    framework=at.space.Categorical('mxnet', 'pytorch'),
 )
 def myfunc(framework):
     return framework
 
-@ag.args(
-    a=ag.space.Real(1e-3, 1e-2, log=True),
-    b=ag.space.Real(1e-3, 1e-2),
-    c=ag.space.Int(1, 10),
-    d=ag.space.Categorical('a', 'b', 'c', 'd'),
-    e=ag.space.Bool(),
-    f=ag.space.List(
-            ag.space.Int(1, 2),
-            ag.space.Categorical(4, 5),
+@at.args(
+    a=at.space.Real(1e-3, 1e-2, log=True),
+    b=at.space.Real(1e-3, 1e-2),
+    c=at.space.Int(1, 10),
+    d=at.space.Categorical('a', 'b', 'c', 'd'),
+    e=at.space.Bool(),
+    f=at.space.List(
+            at.space.Int(1, 2),
+            at.space.Categorical(4, 5),
         ),
-    g=ag.space.Dict(
-            a=ag.Real(0, 10),
+    g=at.space.Dict(
+            a=at.Real(0, 10),
             obj=myobj(),
         ),
-    h=ag.space.Categorical('test', myobj()),
+    h=at.space.Categorical('test', myobj()),
     i = myfunc(),
     )
 def train_fn(args, reporter):
@@ -43,13 +43,13 @@ def train_fn(args, reporter):
     assert f[0] in [1, 2]
     assert f[1] in [4, 5]
     assert g['a'] <= 10 and g['a'] >= 0
-    assert g.obj.name in ['auto', 'gluon']
+    assert g.obj.name in ['auto', 'torch']
     assert hasattr(h, 'name') or h == 'test'
     assert i in ['mxnet', 'pytorch']
     reporter(epoch=e, accuracy=0)
 
 def test_fifo_scheduler():
-    scheduler = ag.scheduler.FIFOScheduler(train_fn,
+    scheduler = at.scheduler.FIFOScheduler(train_fn,
                                            resource={'num_cpus': 2, 'num_gpus': 0},
                                            num_trials=20,
                                            reward_attr='accuracy',
@@ -60,4 +60,3 @@ def test_fifo_scheduler():
 if __name__ == '__main__':
     import nose
     nose.runmodule()
-    ag.done()
