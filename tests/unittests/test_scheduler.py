@@ -1,4 +1,3 @@
-from unittest import TestCase
 import numpy as np
 import autotorch as at
 from nose.plugins.attrib import attr
@@ -20,27 +19,21 @@ def rl_train_fn(args, reporter):
         reporter(epoch=e, accuracy=dummy_accuracy, lr=args.lr, wd=args.wd)
 
 
-@attr('sequential')
-class SequentialTestCase(TestCase):
-    def test_fifo_scheduler(self):
-        scheduler = at.scheduler.FIFOScheduler(train_fn,
-                                               resource={'num_cpus': 2, 'num_gpus': 0},
-                                               num_trials=10,
-                                               reward_attr='accuracy',
-                                               time_attr='epoch')
-        scheduler.run()
-        scheduler.join_jobs()
+def test_fifo_scheduler():
+    scheduler = at.scheduler.FIFOScheduler(train_fn,
+                                           resource={'num_cpus': 2, 'num_gpus': 0},
+                                           num_trials=10,
+                                           reward_attr='accuracy',
+                                           time_attr='epoch')
+    scheduler.run()
+    scheduler.join_jobs()
 
-    def test_hyperband_scheduler(self):
-        scheduler = at.scheduler.HyperbandScheduler(train_fn,
-                                                    resource={'num_cpus': 2, 'num_gpus': 0},
-                                                    num_trials=10,
-                                                    reward_attr='accuracy',
-                                                    time_attr='epoch',
-                                                    grace_period=1)
-        scheduler.run()
-        scheduler.join_jobs()
-
-if __name__ == '__main__':
-    import nose
-    nose.runmodule()
+def test_hyperband_scheduler():
+    scheduler = at.scheduler.HyperbandScheduler(train_fn,
+                                                resource={'num_cpus': 2, 'num_gpus': 0},
+                                                num_trials=10,
+                                                reward_attr='accuracy',
+                                                time_attr='epoch',
+                                                grace_period=1)
+    scheduler.run()
+    scheduler.join_jobs()

@@ -2,7 +2,6 @@ __all__ = ['GridSearcher']
 
 from .searcher import BaseSearcher
 from ..core.space import Categorical
-from sklearn.model_selection import ParameterGrid
 
 class GridSearcher(BaseSearcher):
     """Grid Searcher, only search spaces :class:`autotorch.space.Categorical`
@@ -32,6 +31,7 @@ class GridSearcher(BaseSearcher):
                 'Only Categorical is supported, but {} is {}'.format(hp, hp_type)
             param_grid[hp] = hp_obj.choices
 
+        from sklearn.model_selection import ParameterGrid
         self._configs = list(ParameterGrid(param_grid))
         print('Number of configurations for grid search is {}'.format(len(self._configs)))
 

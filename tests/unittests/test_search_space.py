@@ -1,5 +1,3 @@
-import logging
-import numpy as np
 import autotorch as at
 
 @at.obj(
@@ -56,7 +54,3 @@ def test_fifo_scheduler():
                                            time_attr='epoch')
     scheduler.run()
     scheduler.join_jobs()
-
-if __name__ == '__main__':
-    import nose
-    nose.runmodule()
