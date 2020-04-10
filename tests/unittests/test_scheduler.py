@@ -11,8 +11,8 @@ def train_fn(args, reporter):
         reporter(epoch=e, accuracy=dummy_accuracy, lr=args.lr, wd=args.wd)
 
 @at.args(
-    lr=at.space.Categorical(1e-3, 1e-2),
-    wd=at.space.Categorical(1e-3, 1e-2))
+    lr=at.space.Choice(1e-3, 1e-2),
+    wd=at.space.Choice(1e-3, 1e-2))
 def rl_train_fn(args, reporter):
     for e in range(10):
         dummy_accuracy = 1 - np.power(1.8, -np.random.uniform(e, 2*e))

@@ -4,8 +4,8 @@ import ConfigSpace as CS
 import ConfigSpace.hyperparameters as CSH
 from ..utils import DeprecationHelper, EasyDict, classproperty
 
-__all__ = ['Space', 'NestedSpace', 'AutoTorchObject', 'List', 'Dict',
-           'Categorical', 'Choice', 'Real', 'Int', 'Bool']
+__all__ = ['Space', 'SimpleSpace', 'NestedSpace', 'AutoTorchObject',
+           'List', 'Dict', 'Choice', 'Real', 'Int', 'Bool']
 
 class Space(object):
     """Basic Search Space
@@ -122,11 +122,13 @@ class List(NestedSpace):
 
     Examples
     --------
-    >>> sequence = ag.List(
-    >>>     ag.space.Categorical('conv3x3', 'conv5x5', 'conv7x7'),
-    >>>     ag.space.Categorical('BatchNorm', 'InstanceNorm'),
-    >>>     ag.space.Categorical('relu', 'sigmoid'),
+    >>> sequence = at.List(
+    >>>     at.Choice('conv3x3', 'conv5x5', 'conv7x7'),
+    >>>     at.Choice('BatchNorm', 'InstanceNorm'),
+    >>>     at.Choice('relu', 'sigmoid'),
     >>> )
+    >>> sequence.rand                                                                   
+    ['conv3x3', 'InstanceNorm', 'relu']
     """
     def __init__(self, *args):
         self.data = [*args]
@@ -208,11 +210,12 @@ class Dict(NestedSpace):
 
     Examples
     --------
-    >>> g = ag.space.Dict(
-    >>>         key1=ag.space.Categorical('alpha', 'beta'),
-    >>>         key2=ag.space.Int(0, 3),
+    >>> g = at.Dict(
+    >>>         key1=at.Choice('alpha', 'beta'),
+    >>>         key2=at.Int(0, 3),
     >>>     )
-    >>> print(g)
+    >>> g.rand                                                                           
+    {'key1': 'alpha', 'key2': 1}
     """
     def __init__(self, **kwargs):
         self.data = EasyDict(kwargs)
@@ -283,8 +286,8 @@ class Dict(NestedSpace):
         reprstr = self.__class__.__name__ + str(self.data)
         return reprstr
 
-class Categorical(NestedSpace):
-    """Categorical Search Space (Nested Space)
+class Choice(NestedSpace):
+    """Choice Search Space (Nested Space)
     Add example for conditional space.
 
     Parameters
@@ -294,8 +297,9 @@ class Categorical(NestedSpace):
 
     Examples
     --------
-    a = ag.space.Categorical('a', 'b', 'c', 'd')
-    b = ag.space.Categorical('resnet50', autotorch_obj())
+    >>> a = at.Choice('a', 'b', 'c', 'd')
+    >>> a.rand
+    'a'
     """
     def __init__(self, *data):
         self.data = [*data]
@@ -328,7 +332,7 @@ class Categorical(NestedSpace):
     def sample(self, **config):
         choice = config.pop('choice')
         if isinstance(self.data[choice], NestedSpace):
-            # nested space: Categorical of AutoTorchobjects
+            # nested space: Choice of AutoTorchobjects
             min_config = _strip_config_space(config, prefix=str(choice))
             return self.data[choice].sample(**min_config)
         else:
@@ -348,8 +352,6 @@ class Categorical(NestedSpace):
         reprstr = self.__class__.__name__ + str(self.data)
         return reprstr
 
-Choice = DeprecationHelper(Categorical, 'Choice')
-
 class Real(SimpleSpace):
     """linear search space.
 
@@ -366,7 +368,9 @@ class Real(SimpleSpace):
 
     Examples
     --------
-    >>> learning_rate = ag.Real(0.01, 0.1, log=True)
+    >>> learning_rate = at.Real(0.01, 0.1, log=True)
+    >>> learning_rate.rand                                                               
+    0.013396492756434304
     """
     def __init__(self, lower, upper, default=None, log=False):
         self.lower = lower
@@ -393,7 +397,9 @@ class Int(SimpleSpace):
 
     Examples
     --------
-    >>> range = ag.space.Int(0, 100)
+    >>> range = at.Int(0, 100)
+    >>> range.rand                                                                       
+    82
     """
     def __init__(self, lower, upper, default=None):
         self.lower = lower
@@ -404,15 +410,17 @@ class Int(SimpleSpace):
         return CSH.UniformIntegerHyperparameter(name=name, lower=self.lower, upper=self.upper,
                                                 default_value=self._default)
 
-class Bool(Int):
+class Bool(Choice):
     """Bool Search Space
 
     Examples
     --------
-    pretrained = ag.space.Bool()
+    >>> pretrained = at.Bool()
+    >>> pretrained.rand
+    False
     """
     def __init__(self):
-        super(Bool, self).__init__(0, 1)
+        super(Bool, self).__init__(True, False)
 
 def _strip_config_space(config, prefix):
     # filter out the config with the corresponding prefix

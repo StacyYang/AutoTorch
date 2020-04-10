@@ -1,17 +1,20 @@
 __all__ = ['GridSearcher']
 
 from .searcher import BaseSearcher
-from ..core.space import Categorical
+from ..core.space import Choice
 
 class GridSearcher(BaseSearcher):
-    """Grid Searcher, only search spaces :class:`autotorch.space.Categorical`
+    """Grid Searcher, only search spaces :class:`autotorch.space.Choice`
+
+    Requires scikit-learn to be installed. You can install scikit-learn with the
+    command: ``pip install scikit-learn``.
 
     Examples
     --------
     >>> import autotorch as ag
     >>> @ag.args(
-    >>>     x=ag.space.Categorical(0, 1, 2),
-    >>>     y=ag.space.Categorical('a', 'b', 'c'))
+    >>>     x=ag.space.Choice(0, 1, 2),
+    >>>     y=ag.space.Choice('a', 'b', 'c'))
     >>> def train_fn(args, reporter):
     ...     pass
     >>> searcher = ag.searcher.GridSearcher(train_fn.cs)
@@ -28,7 +31,7 @@ class GridSearcher(BaseSearcher):
             hp_obj = configspace.get_hyperparameter(hp)
             hp_type = str(type(hp_obj)).lower()
             assert 'categorical' in hp_type, \
-                'Only Categorical is supported, but {} is {}'.format(hp, hp_type)
+                'Only Choice is supported, but {} is {}'.format(hp, hp_type)
             param_grid[hp] = hp_obj.choices
 
         from sklearn.model_selection import ParameterGrid

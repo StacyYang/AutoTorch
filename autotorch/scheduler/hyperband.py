@@ -87,11 +87,6 @@ class HyperbandScheduler(FIFOScheduler):
     dist_ip_addrs : list of str
         IP addresses of remote machines.
 
-    See Also
-    --------
-    HyperbandStopping_Manager
-    HyperbandPromotion_Manager
-
     Examples
     --------
     >>> import numpy as np
@@ -157,13 +152,16 @@ class HyperbandScheduler(FIFOScheduler):
             task (:class:`autotorch.scheduler.Task`): a new training task
 
         Relevant entries in kwargs:
-        - bracket: HB bracket to be used. Has been sampled in _promote_config
-        - new_config: If True, task starts new config eval, otherwise it promotes
-          a config (only if type == 'promotion')
+
+            - bracket: HB bracket to be used. Has been sampled in _promote_config
+            - new_config: If True, task starts new config eval, otherwise it promotes
+              a config (only if type == 'promotion')
+
         Only if new_config == False:
-        - config_key: Internal key for config
-        - resume_from: config promoted from this milestone
-        - milestone: config promoted to this milestone (next from resume_from)
+
+            - config_key: Internal key for config
+            - resume_from: config promoted from this milestone
+            - milestone: config promoted to this milestone (next from resume_from)
         """
         cls = HyperbandScheduler
         if not task.resources.is_ready:

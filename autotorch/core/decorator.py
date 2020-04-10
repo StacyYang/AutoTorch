@@ -101,7 +101,7 @@ class _autotorch_method(object):
         kw_spaces = OrderedDict()
         for k, v in self.kwvars.items():
             if isinstance(v, NestedSpace):
-                if isinstance(v, Categorical):
+                if isinstance(v, Choice):
                     kw_spaces['{}.choice'.format(k)] = v
                 for sub_k, sub_v in v.kwspaces.items():
                     new_k = '{}.{}'.format(k, sub_k)
@@ -154,11 +154,11 @@ def func(**kwvars):
 
     Examples
     --------
-    >>> from torchcv.model_zoo import get_model
+    >>> torchvision.models as models
     >>> 
-    >>> @at.func(pretrained=at.space.Categorical(True, False))
-    >>> def cifar_resnet(pretrained):
-    ...     return get_model('cifar_resnet20_v1', pretrained=pretrained)
+    >>> @at.func(pretrained=at.space.Bool())
+    >>> def resnet18(pretrained):
+    ...     return models.resnet18(pretrained=pretrained)
     """
     def _autotorch_kwargs_func(**kwvars):
         def registered_func(func):
@@ -224,12 +224,12 @@ def obj(**kwvars):
     Examples
     --------
     >>> import autotorch as at
-    >>> from mxnet import optimizer as optim
+    >>> import torch
     >>> @at.obj(
-    >>>     learning_rate=at.space.Real(1e-4, 1e-1, log=True),
-    >>>     wd=at.space.Real(1e-4, 1e-1),
+    >>>     lr=at.space.Real(1e-4, 1e-1, log=True),
+    >>>     weight_decay=at.space.Real(1e-4, 1e-1),
     >>> )
-    >>> class Adam(optim.Adam):
+    >>> class Adam(torch.optim.Adam):
     >>>     pass
 
     """

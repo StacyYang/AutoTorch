@@ -12,7 +12,7 @@ version = '0.0.1'
 try:
     from datetime import date
     today = date.today()
-    day = today.strftime("b%d%m%Y")
+    day = today.strftime("b%Y%m%d")
     version += day
 except Exception:
     pass
@@ -40,17 +40,14 @@ class develop(setuptools.command.develop.develop):
 MIN_PYTHON_VERSION = '>=3.6.*'
 
 requirements = [
-    'tqdm',
     'numpy',
-    'scipy',
     'cython',
     'requests',
     'matplotlib',
     'dask>=2.6.0',
     'tqdm>=4.38.0',
-    'tornado>=5.0.1',
     'paramiko~=2.4',
-    'cryptography>=2.8',
+    'tornado>=5.0.1',
     'distributed>=2.6.0',
     'ConfigSpace<=0.4.11',
     'nose',

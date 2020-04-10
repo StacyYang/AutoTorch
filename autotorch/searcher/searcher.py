@@ -5,7 +5,7 @@ from collections import OrderedDict
 
 from ..utils import DeprecationHelper
 
-__all__ = ['BaseSearcher', 'RandomSearcher', 'RandomSampling']
+__all__ = ['BaseSearcher', 'RandomSearcher']
 
 logger = logging.getLogger(__name__)
 
@@ -36,9 +36,8 @@ class BaseSearcher(object):
 
         This function is called inside TaskScheduler to query a new configuration
 
-        Args:
-        kwargs:
-            Extra information may be passed from scheduler to searcher
+        Parameters
+        ----------
         returns: (config, info_dict)
             must return a valid configuration and a (possibly empty) info dict
         """
@@ -132,15 +131,19 @@ class RandomSearcher(BaseSearcher):
 
     Examples
     --------
-    >>> import ConfigSpace as CS
-    >>> import ConfigSpace.hyperparameters as CSH
-    >>> # create configuration space
-    >>> cs = CS.ConfigurationSpace()
-    >>> lr = CSH.UniformFloatHyperparameter('lr', lower=1e-4, upper=1e-1, log=True)
-    >>> cs.add_hyperparameter(lr)
-    >>> # create searcher
-    >>> searcher = RandomSearcher(cs)
-    >>> searcher.get_config()
+    >>> import numpy as np
+    >>> import autotorch as at
+    >>> @at.args(
+    ...     lr=at.space.Real(1e-3, 1e-2, log=True),
+    ...     wd=at.space.Real(1e-3, 1e-2))
+    >>> def train_fn(args, reporter):
+    ...     print('lr: {}, wd: {}'.format(args.lr, args.wd))
+    ...     for e in range(10):
+    ...         dummy_accuracy = 1 - np.power(1.8, -np.random.uniform(e, 2*e))
+    ...         reporter(epoch=e, accuracy=dummy_accuracy, lr=args.lr, wd=args.wd)
+    >>> searcher = at.searcher.RandomSearcher(train_fn.cs)
+    >>> searcher.get_config()                                                            
+    {'lr': 0.0031622777, 'wd': 0.0055}
     """
     MAX_RETRIES = 100
 
@@ -165,6 +168,3 @@ class RandomSearcher(BaseSearcher):
                 num_tries += 1
             self._results[pickle.dumps(new_config)] = self._reward_while_pending()
         return new_config
-
-
-RandomSampling = DeprecationHelper(RandomSearcher, 'RandomSampling')

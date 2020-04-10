@@ -1,14 +1,14 @@
 import autotorch as at
 
 @at.obj(
-    name=at.space.Categorical('auto', 'torch'),
+    name=at.space.Choice('auto', 'torch'),
 )
 class myobj:
     def __init__(self, name):
         self.name = name
 
 @at.func(
-    framework=at.space.Categorical('mxnet', 'pytorch'),
+    framework=at.space.Choice('mxnet', 'pytorch'),
 )
 def myfunc(framework):
     return framework
@@ -17,17 +17,17 @@ def myfunc(framework):
     a=at.space.Real(1e-3, 1e-2, log=True),
     b=at.space.Real(1e-3, 1e-2),
     c=at.space.Int(1, 10),
-    d=at.space.Categorical('a', 'b', 'c', 'd'),
+    d=at.space.Choice('a', 'b', 'c', 'd'),
     e=at.space.Bool(),
     f=at.space.List(
             at.space.Int(1, 2),
-            at.space.Categorical(4, 5),
+            at.space.Choice(4, 5),
         ),
     g=at.space.Dict(
             a=at.Real(0, 10),
             obj=myobj(),
         ),
-    h=at.space.Categorical('test', myobj()),
+    h=at.space.Choice('test', myobj()),
     i = myfunc(),
     )
 def train_fn(args, reporter):
