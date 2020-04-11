@@ -7,7 +7,7 @@ AutoTorch Documentation
 
 Created by `Stacy Yang <https://stacyyang.org/>`_
 
-A HPO Toolit. 
+A HPO Toolkit. 
 
 .. toctree::
    :glob:
