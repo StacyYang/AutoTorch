@@ -1,4 +1,4 @@
 sphinx
-sphinx-gallery
+sphinx-gallery==0.3.1
 sphinxcontrib-googleanalytics
 -e git://github.com/stacyyang/autorch_sphinx_theme.git#egg=autorch_sphinx_theme

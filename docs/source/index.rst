@@ -1,6 +1,6 @@
 .. Encoding documentation master file
 
-:github_url: https://github.com/zhanghang1989/PyTorch-Encoding
+:github_url: https://github.com/StacyYang/AutoTorch
 
 AutoTorch Documentation
 =======================
@@ -15,3 +15,10 @@ A HPO Toolit.
    :caption: API Reference
 
    api/*
+
+.. toctree::
+   :maxdepth: 2
+   :includehidden:
+   :caption: Learning AutoTorch
+
+   /course/course

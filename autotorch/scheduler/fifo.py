@@ -323,7 +323,7 @@ class FIFOScheduler(TaskScheduler):
         >>> scheduler.join_jobs()
         >>> scheduler.get_training_curves(plot=True)
 
-            .. image:: https://github.com/zhanghang1989/AutoTorchWebdata/blob/master/doc/api/autogluon.1.png?raw=true
+            .. image:: https://github.com/zhanghang1989/AutoGluonWebdata/blob/master/doc/api/autogluon.1.png?raw=true
         """
         if filename is None and not plot:
             logger.warning('Please either provide filename or allow plot in get_training_curves')

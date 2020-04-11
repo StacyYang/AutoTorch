@@ -50,14 +50,34 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    #'sphinx_gallery.gen_gallery',
-    # 'sphinxcontrib.googleanalytics',
+    'sphinx_gallery.gen_gallery',
 ]
 
-napoleon_use_ivar = True
+# napoleon_use_ivar = True
 
 # googleanalytics_id = 'UA-54746507-1'
 # googleanalytics_enabled = True
+
+sphinx_gallery_conf = {
+    'examples_dirs': ['course_source'],
+    'gallery_dirs': ['course'],
+    'filename_pattern': '.py',
+    #'filename_pattern': os.environ.get('GALLERY_PATTERN', r'tutorial.py'),
+    'backreferences_dir': False
+}
+
+for i in range(len(sphinx_gallery_conf['examples_dirs'])):
+    gallery_dir = sphinx_gallery_conf['gallery_dirs'][i]
+    source_dir = sphinx_gallery_conf['examples_dirs'][i]
+    # Create gallery dirs if it doesn't exist
+    try:
+        os.mkdir(gallery_dir)
+    except OSError:
+        pass
+
+    # Copy rst files from source dir to gallery dir
+    for f in glob.glob(os.path.join(source_dir, '*.rst')):
+        shutil.copy(f, gallery_dir)
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -65,8 +85,8 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-source_suffix = ['.rst', '.md']
-#source_suffix = '.rst'
+#source_suffix = ['.rst', '.md']
+source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
@@ -97,6 +117,7 @@ language = None
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns += sphinx_gallery_conf['examples_dirs']
 exclude_patterns += ['*/index.rst']
 
 # The name of the Pygments (syntax highlighting) style to use.
@@ -198,8 +219,8 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
-#def setup(app):
-#    # Custom directives
-#    app.add_directive('includenodoc', IncludeDirective)
-#    app.add_directive('galleryitem', GalleryItemDirective)
-#    app.add_directive('customgalleryitem', CustomGalleryItemDirective)
+def setup(app):
+    # Custom directives
+    app.add_directive('includenodoc', IncludeDirective)
+    app.add_directive('galleryitem', GalleryItemDirective)
+    app.add_directive('customgalleryitem', CustomGalleryItemDirective)

@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=source
 set BUILDDIR=build
-set SPHINXPROJ=Encoding
+set SPHINXPROJ=AutoTorch
 
 if "%1" == "" goto help
 

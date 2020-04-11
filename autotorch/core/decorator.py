@@ -119,15 +119,16 @@ class _autotorch_method(object):
 
 
 def args(default={}, **kwvars):
-    """Decorator for customized training script, registering arguments or searchable spaces
+    r"""Decorator for customized training script, registering arguments or searchable spaces
     to the decorated function. The arguments should be python built-in objects,
-    autotorch objects (see :func:`autotorch.obj`_ .), or autotorch search spaces
+    autotorch objects (see :func:`autotorch.obj` .), or autotorch search spaces
     (:class:`autotorch.space.Int`, :class:`autotorch.space.Real` ...).
 
-    Example:
-        >>> @at.args(batch_size=10, lr=at.Real(0.01, 0.1))
-        >>> def my_train(args):
-        ...     print('Batch size is {}, LR is {}'.format(args.batch_size, arg.lr))
+    Examples
+    --------
+    >>> @at.args(batch_size=10, lr=at.Real(0.01, 0.1))
+    >>> def my_train(args):
+    ...     print('Batch size is {}, LR is {}'.format(args.batch_size, arg.lr))
 
     """
     kwvars['_default_config'] = default
