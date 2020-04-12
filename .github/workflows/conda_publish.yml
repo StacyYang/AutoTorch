@@ -1,19 +1,18 @@
-name: Publish
+name: publish_conda
 
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+    
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v1
     - name: publish-to-conda
-      uses: m0nhawk/conda-package-publish-action@master
+      uses: maxibor/conda-package-publish-action@v1.1
       with:
-        subDir: '.'
-        AnacondaUsername: ${{ secrets.ANACONDA_PASSWORD }}
-        AnacondaPassword: ${{ secrets.ANACONDA_USERNAME }}
+        subDir: 'conda'
+        AnacondaToken: ${{ secrets.ANACONDA_TOKEN }}
