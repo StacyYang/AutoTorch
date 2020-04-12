@@ -22,8 +22,10 @@ import autotorch as at
 
 a = at.Int(lower=0, upper=10)
 print(a)
-#Get default value:
-a.default
+
+###############################################################
+# Get default value:
+print(a.default)
 
 ###############################################################
 # Change default value, which is the first configuration that a random searcher
@@ -31,8 +33,10 @@ a.default
 
 a = at.Int(lower=0, upper=10, default=2)
 print(a.default)
+
+###############################################################
 # Pick a random value.
-a.rand
+print(a.rand)
 
 ###############################################################
 # - Real Space :class:`autotorch.space.Real`
@@ -77,8 +81,9 @@ f = at.List(
     )
 print(f)
 
+###############################################################
 # Get one example configuration:
-f.rand
+print(f.rand)
 
 ###############################################################
 # - Dict Space :class:`autotorch.space.Dict`
@@ -97,8 +102,9 @@ g = at.Dict(
     )
 print(g)
 
+###############################################################
 # Get one example configuration:
-g.rand
+print(g.rand)
 
 ###############################################################
 # Decorators for Searchbale Object and Customized Training Scripts
@@ -127,8 +133,9 @@ class MyObj:
 h = MyObj()
 print(h)
 
+###############################################################
 # Get one example random object:
-h.rand
+print(h.rand)
 
 
 ###############################################################

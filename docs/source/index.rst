@@ -21,4 +21,6 @@ A HPO Toolkit.
    :includehidden:
    :caption: Learning AutoTorch
 
+   /course/quick_start
    /course/course
+   /course/distributed

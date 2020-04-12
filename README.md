@@ -6,7 +6,7 @@
 [![Unit Test](https://github.com/StacyYang/AutoTorch/workflows/Python%20application/badge.svg)](https://github.com/StacyYang/AutoTorch/actions)
 
 <div align="left">
-  <a href="https://autotorch.org"><img src="./docs/source/_static/logo.jpg" width="350"></a>
+  <a href="https://autotorch.org"><img src="https://raw.githubusercontent.com/StacyYang/AutoTorch/master/docs/source/_static/logo.jpg" width="350"></a>
 </div>
 
 created by [Stacy Yang](http://stacyyang.org/)
