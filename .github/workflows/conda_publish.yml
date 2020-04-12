@@ -11,11 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: s-weigand/setup-conda@v1
     - name: publish-to-conda
       uses: fcakyon/conda-package-publish-action@master
       with:
-        subdir: 'conda'
+        subdir: 'docs/conda'
         anacondatoken: ${{ secrets.ANACONDA_TOKEN }}
         platforms: 'oxs linux'
         

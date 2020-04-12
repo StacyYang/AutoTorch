@@ -1,0 +1,50 @@
+{% set data = load_setup_py_data() %}
+
+package:
+  name: albumentations
+  version: {{ data['version'] }}
+
+source:
+  path: ...
+
+build:
+  number: 0
+  script: python setup.py install --single-version-externally-managed --record=record.txt
+
+requirements:
+  build:
+    - python
+    - cython
+    - numpy>=1.11.1
+    - scipy
+    - requests
+    - matplotlib
+    - dask>=2.6.0
+    - tqdm>=4.38.0
+    - paramiko~=2.4
+    - tornado>=5.0.1
+    - distributed>=2.6.0
+    - ConfigSpace<=0.4.11
+
+  run:
+    - python
+    - cython
+    - numpy>=1.11.1
+    - scipy
+    - requests
+    - matplotlib
+    - dask>=2.6.0
+    - tqdm>=4.38.0
+    - paramiko~=2.4
+    - tornado>=5.0.1
+    - distributed>=2.6.0
+    - ConfigSpace<=0.4.11
+
+test:
+  imports:
+    - albumentations
+
+about:
+  home: {{ data['url'] }}
+  license: {{ data['license'] }}
+summary: {{ data['description'] }}
