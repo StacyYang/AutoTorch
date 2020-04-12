@@ -38,6 +38,7 @@ jobs:
           cd docs/
           make html
           touch build/html/.nojekyll
+          cp ./build/html/_downloads/**/*.ipynb ./build/html/_downloads/
           aws s3 sync build/html/ s3://autotorch/docs/${{ env.PULL_NUMBER }}/ --acl public-read --follow-symlinks --delete
 
       - name: Comment

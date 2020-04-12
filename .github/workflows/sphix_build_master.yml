@@ -46,6 +46,7 @@ jobs:
           mkdir -p build/html/.well-known
           mkdir -p build/html/.well-known/pki-validation
           cp source/_static/*.txt build/html/.well-known/pki-validation
+          cp ./build/html/_downloads/**/*.ipynb ./build/html/_downloads/
           cd ..
           
       # https://github.com/marketplace/actions/github-pages
