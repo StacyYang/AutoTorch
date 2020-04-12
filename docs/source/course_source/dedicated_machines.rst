@@ -1,5 +1,5 @@
-Distributed Search
-==================
+Distributed Search on Dedicated Machines
+========================================
 
 AutoTorch provide a seamless experience for distributing the hyperparameter search across multiple machines.  It will automatically schedule tasks onto remote machines, just like the local one. All communications are automatically handled such that it looks like a big machine with many GPUs to the user.  This is a quick tutorial for setting up AutoTorch to leverage discributed compute resources.
 

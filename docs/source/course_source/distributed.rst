@@ -1,5 +1,5 @@
-Distributed Training
---------------------
+Distributed Search
+------------------
 
 AutoTorch provide seamless experience on single machine and distributed training. Simply providing the ip-addresses for your remote machines, AutoTorch will automatically schedule the job for you.
 
