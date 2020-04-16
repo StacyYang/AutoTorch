@@ -157,7 +157,7 @@ def func(**kwvars):
     --------
     >>> torchvision.models as models
     >>> 
-    >>> @at.func(pretrained=at.space.Bool())
+    >>> @at.func(pretrained=at.Bool())
     >>> def resnet18(pretrained):
     ...     return models.resnet18(pretrained=pretrained)
     """
@@ -227,8 +227,8 @@ def obj(**kwvars):
     >>> import autotorch as at
     >>> import torch
     >>> @at.obj(
-    >>>     lr=at.space.Real(1e-4, 1e-1, log=True),
-    >>>     weight_decay=at.space.Real(1e-4, 1e-1),
+    >>>     lr=at.Real(1e-4, 1e-1, log=True),
+    >>>     weight_decay=at.Real(1e-4, 1e-1),
     >>> )
     >>> class Adam(torch.optim.Adam):
     >>>     pass

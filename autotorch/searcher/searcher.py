@@ -134,8 +134,8 @@ class RandomSearcher(BaseSearcher):
     >>> import numpy as np
     >>> import autotorch as at
     >>> @at.args(
-    ...     lr=at.space.Real(1e-3, 1e-2, log=True),
-    ...     wd=at.space.Real(1e-3, 1e-2))
+    ...     lr=at.Real(1e-3, 1e-2, log=True),
+    ...     wd=at.Real(1e-3, 1e-2))
     >>> def train_fn(args, reporter):
     ...     print('lr: {}, wd: {}'.format(args.lr, args.wd))
     ...     for e in range(10):

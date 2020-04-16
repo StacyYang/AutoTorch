@@ -40,9 +40,9 @@ def parse_args():
     num_gpus=1,
     model='cifar_resnet20_v1',
     j=4,
-    lr=at.space.Real(1e-2, 1e-1, log=True),
+    lr=at.Real(1e-2, 1e-1, log=True),
     momentum=0.9,
-    wd=at.space.Real(1e-5, 1e-3, log=True),
+    wd=at.Real(1e-5, 1e-3, log=True),
     epochs=20,
 )
 def train_cifar(args, reporter):

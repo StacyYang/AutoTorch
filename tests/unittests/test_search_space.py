@@ -1,33 +1,33 @@
 import autotorch as at
 
 @at.obj(
-    name=at.space.Choice('auto', 'torch'),
+    name=at.Choice('auto', 'torch'),
 )
 class myobj:
     def __init__(self, name):
         self.name = name
 
 @at.func(
-    framework=at.space.Choice('mxnet', 'pytorch'),
+    framework=at.Choice('mxnet', 'pytorch'),
 )
 def myfunc(framework):
     return framework
 
 @at.args(
-    a=at.space.Real(1e-3, 1e-2, log=True),
-    b=at.space.Real(1e-3, 1e-2),
-    c=at.space.Int(1, 10),
-    d=at.space.Choice('a', 'b', 'c', 'd'),
-    e=at.space.Bool(),
-    f=at.space.List(
-            at.space.Int(1, 2),
-            at.space.Choice(4, 5),
+    a=at.Real(1e-3, 1e-2, log=True),
+    b=at.Real(1e-3, 1e-2),
+    c=at.Int(1, 10),
+    d=at.Choice('a', 'b', 'c', 'd'),
+    e=at.Bool(),
+    f=at.List(
+            at.Int(1, 2),
+            at.Choice(4, 5),
         ),
-    g=at.space.Dict(
+    g=at.Dict(
             a=at.Real(0, 10),
             obj=myobj(),
         ),
-    h=at.space.Choice('test', myobj()),
+    h=at.Choice('test', myobj()),
     i = myfunc(),
     )
 def train_fn(args, reporter):
