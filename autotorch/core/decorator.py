@@ -12,9 +12,7 @@ from .space import _add_hp, _add_cs, _rm_hp, _strip_config_space
 from ..utils import EasyDict as ezdict
 from ..utils.deprecate import make_deprecate
 
-__all__ = ['args', 'obj', 'func', 'sample_config',
-           'autotorch_register_args', 'autotorch_object', 'autotorch_function',
-           'autotorch_register_dict']
+__all__ = ['args', 'obj', 'func', 'sample_config']
 
 logger = logging.getLogger(__name__)
 
@@ -286,10 +284,3 @@ def obj(**kwvars):
         return autotorchobject
 
     return registered_class
-
-
-
-autotorch_register_args = make_deprecate(args, 'autotorch_register_args')
-autotorch_register_dict = make_deprecate(args, 'autotorch_register_dict')
-autotorch_function = make_deprecate(func, 'autotorch_function')
-autotorch_object = make_deprecate(obj, 'autotorch_object')

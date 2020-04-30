@@ -1,5 +1,10 @@
 # Adapted from: https://stackoverflow.com/a/33599967/8199034
-import multiprocessing as mp
+import torch.multiprocessing as mp
+from torch.multiprocessing import set_start_method
+try:
+     set_start_method('spawn')
+except RuntimeError:
+    pass
 import traceback
 
 

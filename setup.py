@@ -26,6 +26,7 @@ def create_version_file():
 MIN_PYTHON_VERSION = '>=3.6.*'
 
 requirements = [
+    'torch>=1.0.0',
     'numpy',
     'cython',
     'requests',

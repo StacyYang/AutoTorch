@@ -3,7 +3,7 @@ import os
 import pickle
 import logging
 from warnings import warn
-import multiprocessing as mp
+import torch.multiprocessing as mp
 from collections import OrderedDict
 
 from .remote import RemoteManager
@@ -98,6 +98,7 @@ class TaskScheduler(object):
         """Async Execute the job in remote and release the resources
         """
         logger.debug('\nScheduling {}'.format(task))
+        task.args['args'].update(gpu_ids=task.resources.gpu_ids)
         job = task.resources.node.submit(TaskScheduler._run_dist_job,
                                          task.fn, task.args, task.resources.gpu_ids)
         def _release_resource_callback(fut):
