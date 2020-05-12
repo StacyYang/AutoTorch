@@ -4,7 +4,7 @@ import time
 import json
 import logging
 import threading
-import torch.multiprocessing as mp
+import multiprocessing as mp
 from ..utils import save, load, AutoTorchEarlyStop
 import distributed
 from distributed import Queue, Variable

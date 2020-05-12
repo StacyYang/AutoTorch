@@ -39,6 +39,7 @@ class ResourceManager(object):
 
     @classmethod
     def _release(cls, resource):
+        logger.debug("Releasing {}".format(resource))
         cpu_ids = resource.cpu_ids
         gpu_ids = resource.gpu_ids
         resource._release()
@@ -48,6 +49,7 @@ class ResourceManager(object):
         if len(gpu_ids) > 0:
             for gid in gpu_ids:
                 cls.GPU_QUEUE.put(gid)
+        logger.debug("Releasing succeed {}".format(resource))
 
     @classmethod
     def check_availability(cls, resource):

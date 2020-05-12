@@ -1,12 +1,7 @@
 # Adapted from: https://stackoverflow.com/a/33599967/8199034
-import torch.multiprocessing as mp
-from torch.multiprocessing import set_start_method
-try:
-     set_start_method('spawn')
-except RuntimeError:
-    pass
+import multiprocessing as mp
+from multiprocessing import set_start_method
 import traceback
-
 
 class CustomProcess(mp.Process):
     """Custom Process implementation which checks has Exception property."""

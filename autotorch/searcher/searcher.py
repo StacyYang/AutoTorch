@@ -107,6 +107,13 @@ class BaseSearcher(object):
             else:
                 return dict(), self._reward_while_pending()
 
+    def get_topK_configs(self, k):
+        results_sorted = {k: v for k, v in sorted(self._results.items(), key=lambda item: item[1])}
+        keys = list(results_sorted.keys())
+        k = min(k, len(keys))
+        topK_cfgs = [pickle.loads(key) for key in keys[:k]]
+        return topK_cfgs
+
     def __repr__(self):
         config, reward = self.get_best_config_reward()
         reprstr = (

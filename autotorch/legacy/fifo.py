@@ -3,32 +3,28 @@ import pickle
 import json
 import logging
 import threading
-import torch.multiprocessing as mp
+import multiprocessing as mp
 from collections import OrderedDict
 
 from .scheduler import *
 from ..scheduler.resource import Resources
-from ..scheduler.reporter import LocalStatusReporter as StatusReporter
+from .reporter import StatusReporter
 from ..utils import save, load, mkdir
+from ..core import Task
 
-__all__ = ['FIFOScheduler']
+__all__ = ['FIFO_Scheduler']
 
 logger = logging.getLogger(__name__)
 
-class FIFOScheduler(TaskScheduler):
+class FIFO_Scheduler(TaskScheduler):
     """Simple scheduler that just runs trials in submission order.
 
     Args:
-        train_fn (callable): A task launch function for training.
-            Note: please add the `@autogluon_method` decorater to the original function.
+        train_fn (callable): A task launch function for training. Note: please add the `@autogluon_method` decorater to the original function.
         args (object): Default arguments for launching train_fn.
-        resource (dict): Computation resources.
-            For example, `{'num_cpus':2, 'num_gpus':1}`
-        searcher (object): Autogluon searcher.
-            For example, autogluon.searcher.RandomSampling
-        reward_attr (str): The training result objective value attribute. As
-            with `time_attr`, this may refer to any objective value. Stopping
-            procedures will use this attribute.
+        resource (dict): Computation resources. For example, `{'num_cpus':2, 'num_gpus':1}`
+        searcher (object): Autogluon searcher. For example, autogluon.searcher.RandomSampling
+        reward_attr (str): The training result objective value attribute. As with `time_attr`, this may refer to any objective value. Stopping procedures will use this attribute.
 
     Example:
         >>> @autogluon_method
@@ -36,7 +32,7 @@ class FIFOScheduler(TaskScheduler):
         >>>     for e in range(10):
         >>>         # forward, backward, optimizer step and evaluation metric
         >>>         # generate fake top1_accuracy
-        >>>         top1_accuracy = 1 - np.power(1.8, -np.random.uniform(e, 2*e))
+        >>>         top1_accuracy = 1autogluon/scheduler/fifo.py - np.power(1.8, -np.random.uniform(e, 2*e))
         >>>         reporter(epoch=e, accuracy=top1_accuracy)
         >>> import ConfigSpace as CS
         >>> import ConfigSpace.hyperparameters as CSH
@@ -45,7 +41,7 @@ class FIFOScheduler(TaskScheduler):
         >>> cs.add_hyperparameter(lr)
         >>> searcher = RandomSampling(cs)
         >>> myscheduler = FIFO_Scheduler(train_fn, args,
-        >>>                              resource={'num_cpus': 2, 'num_gpus': 0}, 
+        >>>                              resource={'num_cpus': 2, 'num_gpus': 0},
         >>>                              searcher=searcher, num_trials=20,
         >>>                              reward_attr='accuracy',
         >>>                              time_attr='epoch',
@@ -54,17 +50,20 @@ class FIFOScheduler(TaskScheduler):
         >>> myscheduler.run()
     """
     def __init__(self, train_fn, args, resource, searcher, checkpoint='./exp/checkerpoint.ag',
-                 resume=False, num_trials=None, time_attr='epoch', reward_attr='accuracy',
-                 visualizer='none'):
-        super(FIFOScheduler, self).__init__()
+                 resume=False, num_trials=None, time_out=None, max_reward=1.0, time_attr='epoch',
+                 reward_attr='accuracy', visualizer='none'):
+        super(FIFO_Scheduler, self).__init__()
         self.train_fn = train_fn
         self.args = args
         self.resource = resource
         self.searcher = searcher
         self.num_trials = num_trials
+        self.time_out = time_out
+        self.max_reward = max_reward
         self._checkpoint = checkpoint
         self._time_attr = time_attr
         self._reward_attr = reward_attr
+        self.visualizer = visualizer.lower()
         self.log_lock = mp.Lock()
         self.training_history = OrderedDict()
         if resume:
@@ -75,37 +74,22 @@ class FIFOScheduler(TaskScheduler):
                 logger.exception(msg)
                 raise FileExistsError(msg)
 
-    def add_training_result(self, task_id, reward):
-        with self.log_lock:
-            if task_id in self.training_history:
-                self.training_history[task_id].append(reward)
-            else:
-                self.training_history[task_id] = [reward]
-
-    def get_training_curves(self, filename=None, plot=False, use_legend=True):
-        if filename is None and not plot:
-            logger.warning('Please either provide filename or allow plot in get_training_curves')
-        import matplotlib.pyplot as plt
-        plt.ylabel(self._reward_attr)
-        plt.xlabel(self._time_attr)
-        for task_id, task_res in self.training_history.items():
-            x = list(range(len(task_res)))
-            plt.plot(x, task_res, label='task {}'.format(task_id))
-        if use_legend:
-            plt.legend(loc='best')
-        if filename is not None:
-            logger.info('Saving Training Curve in {}'.format(filename))
-            plt.savefig(filename)
-        if plot: plt.show()
-
-    def run(self, num_trials=None):
+    def run(self, num_trials=None, time_out=None):
         """Run multiple number of trials
         """
+        start_time = time.time()
         self.num_trials = num_trials if num_trials else self.num_trials
+        self.time_out = time_out if time_out else self.time_out
         logger.info('Starting Experiments')
         logger.info('Num of Finished Tasks is {}'.format(self.num_finished_tasks))
         logger.info('Num of Pending Tasks is {}'.format(self.num_trials - self.num_finished_tasks))
-        for i in range(self.num_finished_tasks, self.num_trials):
+        tbar = trange(self.num_finished_tasks, self.num_trials)
+        for _ in tbar:
+            if time_out and time.time() - start_time >= time_out \
+                    or self.max_reward and self.get_best_reward() >= self.max_reward:
+                break
+            tbar.set_description('Current best reward: {} and best config: {}'
+                                 .format(self.get_best_reward(), json.dumps(self.get_best_config())))
             self.schedule_next()
 
     def save(self, checkpoint=None):
@@ -133,8 +117,12 @@ class FIFOScheduler(TaskScheduler):
         logger.debug("Adding A New Task {}".format(task))
         FIFO_Scheduler.RESOURCE_MANAGER._request(task.resources)
         with self.LOCK:
-            reporter = StatusReporter()
+            state_dict_path = os.path.join(os.path.dirname(self._checkpoint),
+                                           'task{}_state_dict.ag'.format(task.task_id))
+            reporter = StatusReporter(state_dict_path)
             task.args['reporter'] = reporter
+            task.args['task_id'] = task.task_id
+            task.args['resources'] = task.resources
             # main process
             tp = mp.Process(target=FIFO_Scheduler._run_task, args=(
                             task.fn, task.args, task.resources,
@@ -191,13 +179,16 @@ class FIFOScheduler(TaskScheduler):
             reporter.move_on()
             last_result = reported_result
         searcher.update(task.args['config'], last_result[self._reward_attr])
+        if searcher.is_best(task.args['config']):
+            searcher.update_best_state(reporter.dict_path)
+
+    def get_best_state(self):
+        return self.searcher.get_best_state()
 
     def get_best_config(self):
-        self.join_tasks()
         return self.searcher.get_best_config()
 
     def get_best_reward(self):
-        self.join_tasks()
         return self.searcher.get_best_reward()
 
     def add_training_result(self, task_id, reported_result):
@@ -227,13 +218,11 @@ class FIFOScheduler(TaskScheduler):
     def state_dict(self, destination=None):
         destination = super(FIFO_Scheduler, self).state_dict(destination)
         destination['searcher'] = pickle.dumps(self.searcher)
-        if self.visualizer == 'mxboard' or self.visualizer == 'tensorboard':
-            destination['visualizer'] = json.dumps(self.mxboard._scalar_dict)
+        destination['training_history'] = json.dumps(self.training_history)
         return destination
 
     def load_state_dict(self, state_dict):
         super(FIFO_Scheduler, self).load_state_dict(state_dict)
         self.searcher = pickle.loads(state_dict['searcher'])
-        if self.visualizer == 'mxboard' or self.visualizer == 'tensorboard':
-            self.mxboard._scalar_dict = json.loads(state_dict['visualizer'])
+        self.training_history = json.loads(state_dict['training_history'])
         logger.debug('Loading Searcher State {}'.format(self.searcher))

@@ -3,7 +3,7 @@ import os
 import pickle
 import logging
 from warnings import warn
-import torch.multiprocessing as mp
+import multiprocessing as mp
 from collections import OrderedDict
 
 from .remote import RemoteManager

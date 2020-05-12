@@ -1,30 +1,19 @@
 """Task Scheduler"""
 import os
-import copy
 import pickle
 import logging
 import argparse
 import multiprocessing as mp
-
-import torch
-from torch.multiprocessing import set_start_method
-try:
-    set_start_method('spawn')
-except RuntimeError:
-    pass
-
 from collections import namedtuple, OrderedDict
-
-from ..core import Task
 from ..scheduler.resource import ResourceManager
+from ..core import Task
 
-__all__ = ['TaskScheduler', 'Task']
+__all__ = ['TaskScheduler']
 
 logger = logging.getLogger(__name__)
 
 class TaskScheduler(object):
     """Basic Task Scheduler
-
     Example:
         >>> def my_task():
         >>>     pass
@@ -41,13 +30,11 @@ class TaskScheduler(object):
 
     def add_task(self, task):
         """Adding a training task to the scheduler.
-
         Args:
             task (:class:`autogluon.scheduler.Task`): a new trianing task
         """
         logger.debug("\nAdding A New Task {}".format(task))
         TaskScheduler.RESOURCE_MANAGER._request(task.resources)
-
         p = mp.Process(target=TaskScheduler._run_task, args=(
                        task.fn, task.args, task.resources,
                        TaskScheduler.RESOURCE_MANAGER))
@@ -60,13 +47,16 @@ class TaskScheduler(object):
     def _run_task(fn, args, resources, resource_manager):
         """Executing the task
         """
+        logger.debug('Scheduling A Task: {}'.format(args))
         if resources.num_gpus > 0:
             os.environ['CUDA_VISIBLE_DEVICES'] = ",".join(map(str,resources.gpu_ids))
         try:
             fn(**args)
         except Exception as e:
+            import traceback
             logger.error(
-                'Uncaught exception in worker process: {}'.format(e))
+                'Uncaught exception in worker process: {}. {}'.format(e, traceback.print_exc()))
+        logger.debug("Scheduler Releasing")
         resource_manager._release(resources)
 
     def _cleaning_tasks(self):
