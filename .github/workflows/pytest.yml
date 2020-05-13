@@ -23,6 +23,7 @@ jobs:
 
     - name: Install package
       run: |
+        pip install scikit-learn==0.21.2
         pip install -e .
           
     - name: Run pytest

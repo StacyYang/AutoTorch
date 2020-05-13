@@ -1,6 +1,5 @@
 import numpy as np
 import autotorch as at
-from nose.plugins.attrib import attr
 
 @at.args(
     lr=at.Real(1e-3, 1e-2, log=True),

@@ -17,3 +17,9 @@ autotorch.searcher
 
 .. autoclass:: GridSearcher
     :members:
+
+:hidden:`BayesOptSearcher`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: BayesOptSearcher
+    :members:

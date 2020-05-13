@@ -3,8 +3,6 @@ import multiprocessing as mp
 import pickle
 from collections import OrderedDict
 
-from ..utils import DeprecationHelper
-
 __all__ = ['BaseSearcher', 'RandomSearcher']
 
 logger = logging.getLogger(__name__)
@@ -149,7 +147,7 @@ class RandomSearcher(BaseSearcher):
     ...         dummy_accuracy = 1 - np.power(1.8, -np.random.uniform(e, 2*e))
     ...         reporter(epoch=e, accuracy=dummy_accuracy, lr=args.lr, wd=args.wd)
     >>> searcher = at.searcher.RandomSearcher(train_fn.cs)
-    >>> searcher.get_config()                                                            
+    >>> searcher.get_config()
     {'lr': 0.0031622777, 'wd': 0.0055}
     """
     MAX_RETRIES = 100
