@@ -1,0 +1,627 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>autotorch &mdash; AutoTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="autotorch.scheduler" href="scheduler.html" />
+    <link rel="prev" title="AutoTorch Documentation" href="../index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://autotorch.org/" aria-label="AutoTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <!--li class="active">
+            <a href="https://autotorch.org//tutorials">Tutorials</a>
+          </li-->
+
+          <li>
+            <a href="https://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  master (0.0.2b20200514)
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">autotorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scheduler.html">autotorch.scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searcher.html">autotorch.searcher</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Learning AutoTorch</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../course/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course/course.html">Learning AutoTorch: A 30 Minutes Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course/distributed.html">Distributed Search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>autotorch</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/core.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">api/core</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="section" id="autotorch">
+<h1>autotorch<a class="headerlink" href="#autotorch" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="real">
+<h2><span class="hidden-section">Real</span><a class="headerlink" href="#real" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="autotorch.Real">
+<em class="property">class </em><code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">Real</code><span class="sig-paren">(</span><em class="sig-param">lower</em>, <em class="sig-param">upper</em>, <em class="sig-param">default=None</em>, <em class="sig-param">log=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/core/space.html#Real"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.Real" title="Permalink to this definition">¶</a></dt>
+<dd><p>linear search space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lower</strong> (<em>float</em>) – the lower bound of the search space</p></li>
+<li><p><strong>upper</strong> (<em>float</em>) – the upper bound of the search space</p></li>
+<li><p><strong>default</strong> (<em>float</em><em> (</em><em>optional</em><em>)</em>) – default value</p></li>
+<li><p><strong>log</strong> (<em>(</em><em>True/False</em><em>)</em>) – search space in log scale</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">learning_rate</span><span class="o">.</span><span class="n">rand</span>
+<span class="go">0.013396492756434304</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="int">
+<h2><span class="hidden-section">Int</span><a class="headerlink" href="#int" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="autotorch.Int">
+<em class="property">class </em><code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">Int</code><span class="sig-paren">(</span><em class="sig-param">lower</em>, <em class="sig-param">upper</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/core/space.html#Int"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.Int" title="Permalink to this definition">¶</a></dt>
+<dd><p>integer search space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lower</strong> (<em>int</em>) – the lower bound of the search space</p></li>
+<li><p><strong>upper</strong> (<em>int</em>) – the upper bound of the search space</p></li>
+<li><p><strong>default</strong> (<em>int</em><em> (</em><em>optional</em><em>)</em>) – default value</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="o">.</span><span class="n">rand</span>
+<span class="go">82</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="choice">
+<h2><span class="hidden-section">Choice</span><a class="headerlink" href="#choice" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="autotorch.Choice">
+<em class="property">class </em><code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">Choice</code><span class="sig-paren">(</span><em class="sig-param">*data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/core/space.html#Choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.Choice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Choice Search Space (Nested Space)
+Add example for conditional space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Space</em><em> or </em><em>python built-in objects</em>) – the choice candidates</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">rand</span>
+<span class="go">&#39;a&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="list">
+<h2><span class="hidden-section">List</span><a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="autotorch.List">
+<em class="property">class </em><code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">List</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/core/space.html#List"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.List" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Searchable List (Nested Space)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>list</em>) – a list of search spaces.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sequence</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;conv3x3&#39;</span><span class="p">,</span> <span class="s1">&#39;conv5x5&#39;</span><span class="p">,</span> <span class="s1">&#39;conv7x7&#39;</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;BatchNorm&#39;</span><span class="p">,</span> <span class="s1">&#39;InstanceNorm&#39;</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="s1">&#39;sigmoid&#39;</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequence</span><span class="o">.</span><span class="n">rand</span>
+<span class="go">[&#39;conv3x3&#39;, &#39;InstanceNorm&#39;, &#39;relu&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="dict">
+<h2><span class="hidden-section">Dict</span><a class="headerlink" href="#dict" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="autotorch.Dict">
+<em class="property">class </em><code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">Dict</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/core/space.html#Dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.Dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Searchable Dict (Nested Space)</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">key1</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">key2</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">rand</span>
+<span class="go">{&#39;key1&#39;: &#39;alpha&#39;, &#39;key2&#39;: 1}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="bool">
+<h2><span class="hidden-section">Bool</span><a class="headerlink" href="#bool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="autotorch.Bool">
+<em class="property">class </em><code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">Bool</code><a class="reference internal" href="../_modules/autotorch/core/space.html#Bool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.Bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bool Search Space</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pretrained</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Bool</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pretrained</span><span class="o">.</span><span class="n">rand</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="args">
+<h2><span class="hidden-section">args</span><a class="headerlink" href="#args" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="autotorch.args">
+<code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">args</code><span class="sig-paren">(</span><em class="sig-param">default={}</em>, <em class="sig-param">**kwvars</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/core/decorator.html#args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator for customized training script, registering arguments or searchable spaces
+to the decorated function. The arguments should be python built-in objects,
+autotorch objects (see <a class="reference internal" href="#autotorch.obj" title="autotorch.obj"><code class="xref py py-func docutils literal notranslate"><span class="pre">autotorch.obj()</span></code></a> .), or autotorch search spaces
+(<code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.Int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.Real</span></code> …).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@at</span><span class="o">.</span><span class="n">args</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_train</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Batch size is </span><span class="si">{}</span><span class="s1">, LR is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">lr</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="obj">
+<h2><span class="hidden-section">obj</span><a class="headerlink" href="#obj" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="autotorch.obj">
+<code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">obj</code><span class="sig-paren">(</span><em class="sig-param">**kwvars</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/core/decorator.html#obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register args or searchable spaces to the class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a lazy init object, which allows distributed training.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.AutoTorchObject</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">autotorch</span> <span class="k">as</span> <span class="nn">at</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@at</span><span class="o">.</span><span class="n">obj</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">lr</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">weight_decay</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Adam</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="func">
+<h2><span class="hidden-section">func</span><a class="headerlink" href="#func" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="autotorch.func">
+<code class="sig-prename descclassname">autotorch.</code><code class="sig-name descname">func</code><span class="sig-paren">(</span><em class="sig-param">**kwvars</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/core/decorator.html#func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register args or searchable spaces to the functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a lazy init object, which allows distributed training.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.AutoTorchObject</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">torchvision</span><span class="o">.</span><span class="n">models</span> <span class="k">as</span> <span class="n">models</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@at</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Bool</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet18</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="n">pretrained</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scheduler.html" class="btn btn-neutral float-right" title="autotorch.scheduler" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="AutoTorch Documentation" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr class="helpful-hr hr-top">
+      <div class="helpful-container">
+        <div class="helpful-question">Was this helpful?</div>
+        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
+        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
+        <div class="was-helpful-thank-you">Thank you</div>
+      </div>
+    <hr class="helpful-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stacy Yang.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+    
+
+  <!--  -->
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">autotorch</a><ul>
+<li><a class="reference internal" href="#real"><span class="hidden-section">Real</span></a></li>
+<li><a class="reference internal" href="#int"><span class="hidden-section">Int</span></a></li>
+<li><a class="reference internal" href="#choice"><span class="hidden-section">Choice</span></a></li>
+<li><a class="reference internal" href="#list"><span class="hidden-section">List</span></a></li>
+<li><a class="reference internal" href="#dict"><span class="hidden-section">Dict</span></a></li>
+<li><a class="reference internal" href="#bool"><span class="hidden-section">Bool</span></a></li>
+<li><a class="reference internal" href="#args"><span class="hidden-section">args</span></a></li>
+<li><a class="reference internal" href="#obj"><span class="hidden-section">obj</span></a></li>
+<li><a class="reference internal" href="#func"><span class="hidden-section">func</span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/language_data.js"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!--div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for AutoTorch</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="#">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div-->
+
+  <!--footer class="site-footer">
+  </footer-->
+
+  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="http://autotorch.org/" aria-label="AutoTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <!--div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          
+          <li class="active">
+            <a href="http://autotorch.org/">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="http://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div-->
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

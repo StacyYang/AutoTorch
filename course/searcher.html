@@ -1,0 +1,611 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Random Search vs. Bayesian Optimization &mdash; AutoTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Distributed Search" href="distributed.html" />
+    <link rel="prev" title="Experiment Scheduler using HPO Algorithms" href="hpo_algorithms.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://autotorch.org/" aria-label="AutoTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <!--li class="active">
+            <a href="https://autotorch.org//tutorials">Tutorials</a>
+          </li-->
+
+          <li>
+            <a href="https://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  master (0.0.2b20200514)
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/core.html">autotorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/scheduler.html">autotorch.scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/searcher.html">autotorch.searcher</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Learning AutoTorch</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="course.html">Learning AutoTorch: A 30 Minutes Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">Distributed Search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="course.html">Learning AutoTorch: A 30 Minutes Course</a> &gt;</li>
+        
+      <li>Random Search vs. Bayesian Optimization</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/course/searcher.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">course/searcher</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-course-searcher-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="random-search-vs-bayesian-optimization">
+<span id="sphx-glr-course-searcher-py"></span><h1>Random Search vs. Bayesian Optimization<a class="headerlink" href="#random-search-vs-bayesian-optimization" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we demonstrate the behaviors of random search and Bayesian optimization
+in a simple simulation environment.</p>
+<div class="section" id="create-a-reward-function-for-toy-experiments">
+<h2>Create a Reward Function for Toy Experiments<a class="headerlink" href="#create-a-reward-function-for-toy-experiments" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Import the packages:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Generate the simulated reward as a mixture of 2 gaussians:</p></li>
+</ul>
+<p>Input Space <cite>x = [0: 99], y = [0: 99]</cite>.
+The rewards is a combination of 2 gaussians as shown in the following figure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gaussian2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">xalpha</span><span class="p">,</span> <span class="n">yalpha</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">/</span><span class="n">xalpha</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y0</span><span class="p">)</span><span class="o">/</span><span class="n">yalpha</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+      <span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ps</span><span class="p">:</span>
+    <span class="n">Z</span> <span class="o">+=</span> <span class="n">gaussian2d</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Visualize the reward space:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;plasma&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_searcher_001.png" class="sphx-glr-single-img" src="../_images/sphx_glr_searcher_001.png" />
+</div>
+<div class="section" id="create-training-function">
+<h2>Create Training Function<a class="headerlink" href="#create-training-function" title="Permalink to this headline">¶</a></h2>
+<p>We can simply define an AutoTorch searchable function with a decorator <cite>at.gargs</cite>.
+The <cite>reporter</cite> is used to communicate with AutoTorch search and scheduling algorithms.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autotorch</span> <span class="k">as</span> <span class="nn">at</span>
+
+<span class="nd">@at</span><span class="o">.</span><span class="n">args</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">),</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">99</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">toy_simulation</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">reporter</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">y</span>
+    <span class="n">reporter</span><span class="p">(</span><span class="n">accuracy</span><span class="o">=</span><span class="n">Z</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="random-search">
+<h2>Random Search<a class="headerlink" href="#random-search" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">random_scheduler</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">FIFOScheduler</span><span class="p">(</span><span class="n">toy_simulation</span><span class="p">,</span>
+                                              <span class="n">resource</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;num_gpus&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                                              <span class="n">num_trials</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                                              <span class="n">reward_attr</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span>
+                                              <span class="n">resume</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">random_scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">random_scheduler</span><span class="o">.</span><span class="n">join_jobs</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best config: </span><span class="si">{}</span><span class="s1">, best reward: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">random_scheduler</span><span class="o">.</span><span class="n">get_best_config</span><span class="p">(),</span> <span class="n">random_scheduler</span><span class="o">.</span><span class="n">get_best_reward</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Best config: {&#39;x&#39;: 22, &#39;y&#39;: 72}, best reward: 0.9942633286025881
+</pre></div>
+</div>
+</div>
+<div class="section" id="bayesian-optimization">
+<h2>Bayesian Optimization<a class="headerlink" href="#bayesian-optimization" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bayesopt_scheduler</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">FIFOScheduler</span><span class="p">(</span><span class="n">toy_simulation</span><span class="p">,</span>
+                                                <span class="n">searcher</span><span class="o">=</span><span class="s1">&#39;bayesopt&#39;</span><span class="p">,</span>
+                                                <span class="n">resource</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;num_gpus&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                                                <span class="n">num_trials</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                                                <span class="n">reward_attr</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span>
+                                                <span class="n">resume</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">bayesopt_scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">bayesopt_scheduler</span><span class="o">.</span><span class="n">join_jobs</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best config: </span><span class="si">{}</span><span class="s1">, best reward: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bayesopt_scheduler</span><span class="o">.</span><span class="n">get_best_config</span><span class="p">(),</span> <span class="n">bayesopt_scheduler</span><span class="o">.</span><span class="n">get_best_reward</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Best config: {&#39;x&#39;: 20, &#39;y&#39;: 70}, best reward: 1.000009105108358
+</pre></div>
+</div>
+</div>
+<div class="section" id="compare-the-performance">
+<h2>Compare the performance<a class="headerlink" href="#compare-the-performance" title="Permalink to this headline">¶</a></h2>
+<p>Get the result history:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">results_bayes</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">bayesopt_scheduler</span><span class="o">.</span><span class="n">training_history</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+<span class="n">results_random</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">random_scheduler</span><span class="o">.</span><span class="n">training_history</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results_random</span><span class="p">)),</span> <span class="n">results_random</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results_bayes</span><span class="p">)),</span> <span class="n">results_bayes</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_searcher_002.png" class="sphx-glr-single-img" src="../_images/sphx_glr_searcher_002.png" />
+<div class="section" id="advance-usage-for-bayesian-optimization">
+<h3>Advance Usage for Bayesian Optimization<a class="headerlink" href="#advance-usage-for-bayesian-optimization" title="Permalink to this headline">¶</a></h3>
+<p>For some special cases, not all configurations are valid for the requirement.
+Instead of falling back to random search, we can pre-generate a set of valid
+configurations using random search, and accelerate the HPO using Bayesian
+Optimization. The key idea is fitting GP model using observed data points, and
+using acqusition function to re-rank the pending configurations.</p>
+<ul class="simple">
+<li><p>Define valid condiction</p></li>
+</ul>
+<p>We require x or y to be an even number</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_valid_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Pre-generate configurations using random searcher</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">random_searcher</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">RandomSearcher</span><span class="p">(</span><span class="n">toy_simulation</span><span class="o">.</span><span class="n">cs</span><span class="p">)</span>
+
+<span class="n">lazy_configs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">valid_cnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="n">valid_cnt</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">random_searcher</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">is_valid_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+        <span class="n">valid_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">lazy_configs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Initialize lazy configurations with Bayesian optimization</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lazy_bayes</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">BayesOptSearcher</span><span class="p">(</span><span class="n">toy_simulation</span><span class="o">.</span><span class="n">cs</span><span class="p">,</span> <span class="n">lazy_configs</span><span class="o">=</span><span class="n">lazy_configs</span><span class="p">)</span>
+
+<span class="n">lazy_scheduler</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">FIFOScheduler</span><span class="p">(</span><span class="n">toy_simulation</span><span class="p">,</span>
+                                            <span class="n">searcher</span><span class="o">=</span><span class="n">lazy_bayes</span><span class="p">,</span>
+                                            <span class="n">resource</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;num_gpus&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+                                            <span class="n">num_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                                            <span class="n">reward_attr</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span>
+                                            <span class="n">resume</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">lazy_scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">lazy_scheduler</span><span class="o">.</span><span class="n">join_jobs</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best config: </span><span class="si">{}</span><span class="s1">, best reward: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lazy_scheduler</span><span class="o">.</span><span class="n">get_best_config</span><span class="p">(),</span> <span class="n">lazy_scheduler</span><span class="o">.</span><span class="n">get_best_reward</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Best config: {&#39;x&#39;: 20, &#39;y&#39;: 73}, best reward: 0.9943964671954428
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Plot the training curve</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">results_lazy</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">lazy_scheduler</span><span class="o">.</span><span class="n">training_history</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results_lazy</span><span class="p">)),</span> <span class="n">results_lazy</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_searcher_003.png" class="sphx-glr-single-img" src="../_images/sphx_glr_searcher_003.png" />
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  17.013 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-course-searcher-py">
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/5bf131421d3d6b91ec56133496198fac/searcher.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">searcher.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/f435d94d365a99387ca81f2880f54f19/searcher.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">searcher.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="distributed.html" class="btn btn-neutral float-right" title="Distributed Search" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="hpo_algorithms.html" class="btn btn-neutral" title="Experiment Scheduler using HPO Algorithms" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr class="helpful-hr hr-top">
+      <div class="helpful-container">
+        <div class="helpful-question">Was this helpful?</div>
+        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
+        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
+        <div class="was-helpful-thank-you">Thank you</div>
+      </div>
+    <hr class="helpful-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stacy Yang.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+    
+
+  <!--  -->
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Random Search vs. Bayesian Optimization</a><ul>
+<li><a class="reference internal" href="#create-a-reward-function-for-toy-experiments">Create a Reward Function for Toy Experiments</a></li>
+<li><a class="reference internal" href="#create-training-function">Create Training Function</a></li>
+<li><a class="reference internal" href="#random-search">Random Search</a></li>
+<li><a class="reference internal" href="#bayesian-optimization">Bayesian Optimization</a></li>
+<li><a class="reference internal" href="#compare-the-performance">Compare the performance</a><ul>
+<li><a class="reference internal" href="#advance-usage-for-bayesian-optimization">Advance Usage for Bayesian Optimization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/language_data.js"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!--div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for AutoTorch</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="#">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div-->
+
+  <!--footer class="site-footer">
+  </footer-->
+
+  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="http://autotorch.org/" aria-label="AutoTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <!--div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          
+          <li class="active">
+            <a href="http://autotorch.org/">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="http://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div-->
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

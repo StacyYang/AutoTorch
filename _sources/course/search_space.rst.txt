@@ -1,0 +1,592 @@
+.. note::
+    :class: sphx-glr-download-link-note
+
+    Click :ref:`here <sphx_glr_download_course_search_space.py>` to download the full example code
+.. rst-class:: sphx-glr-example-title
+
+.. _sphx_glr_course_search_space.py:
+
+
+Search Space and Decorator
+==========================
+
+This tutorial explains the supported search spaces and how to use them, including
+simple search spaces (Int, Real, Bool and Choice) and nested search spaces
+(Choice, List, Dict). Each search space describes the set of possible values for a hyperparameter, from which the searcher will try particular values during hyperparameter optimization. AutoTorch also enables search spaces in user-defined objects using the decorator
+`at.obj` and user-defined functions using the decorator `at.func`.
+
+.. code-block:: default
+
+
+    import autotorch as at
+
+
+
+
+
+
+
+Search Space
+------------
+Simple Search Space
+~~~~~~~~~~~~~~~~~~~
+- Integer Space :class:`autotorch.space.Int`
+
+An integer is chosen between lower and upper value during the searcher sampling.
+
+
+.. code-block:: default
+
+
+    a = at.Int(lower=0, upper=10)
+    print(a)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Int: lower=0, upper=10
+
+
+Get default value:
+
+
+.. code-block:: default
+
+    print(a.default)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    5
+
+
+Change default value, which is the first configuration that a random searcher
+:class:`autotorch.searcher.RandomSearcher` will try:
+
+
+.. code-block:: default
+
+
+    a = at.Int(lower=0, upper=10, default=2)
+    print(a.default)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    2
+
+
+Pick a random value.
+
+
+.. code-block:: default
+
+    print(a.rand)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    4
+
+
+- Real Space :class:`autotorch.space.Real`
+
+A real number is chosen between lower and upper value during the
+searcher sampling.
+
+
+.. code-block:: default
+
+
+    b = at.Real(lower=1e-4, upper=1e-2)
+    print(b)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Real: lower=0.0001, upper=0.01
+
+
+Real space in log scale:
+
+
+.. code-block:: default
+
+
+    c = at.Real(lower=1e-4, upper=1e-2, log=True)
+    print(c)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Real: lower=0.0001, upper=0.01
+
+
+- Choice Space :class:`autotorch.space.Choice`
+
+Choice Space chooses one value from all the possible values during the searcher sampling.
+
+
+.. code-block:: default
+
+
+    d = at.Choice('Monday', 'Tuesday', 'Wednesday')
+    print(d)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Choice['Monday', 'Tuesday', 'Wednesday']
+
+
+Nested Search Space
+~~~~~~~~~~~~~~~~~~~
+- Choice Space :class:`autotorch.space.Choice`
+
+Choice Space can also be used as a nested search space.
+For an example, see NestedExampleObj_.
+
+- List Space :class:`autotorch.space.List`
+
+List Space returns a list of sampled results.
+In this example, the first element of the list is a Int Space sampled
+from 0 to 3, and the second element is a Choice Space sampled from the choices of `'alpha'` and `'beta'`.
+
+
+.. code-block:: default
+
+
+    f = at.List(
+            at.Int(0, 3),
+            at.Choice('alpha', 'beta'),
+        )
+    print(f)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    List[Int: lower=0, upper=3, Choice['alpha', 'beta']]
+
+
+Get one example configuration:
+
+
+.. code-block:: default
+
+    print(f.rand)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    [3, 'beta']
+
+
+- Dict Space :class:`autotorch.space.Dict`
+
+Dict Space returns a dict of sampled results.
+Similar to List Space, the resulting configuraton of Dict is
+a dict. In this example, the value of `'key1'` is sampled from
+a Choice Space with the choices of `'alpha'` and `'beta'`,
+and the value of `'key2'` is sampled from an Int Space between
+0 and 3.
+
+
+.. code-block:: default
+
+
+    g = at.Dict(
+            key1=at.Choice('alpha', 'beta'),
+            key2=at.Int(0, 3),
+            key3='constant'
+        )
+    print(g)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Dict{'key1': Choice['alpha', 'beta'], 'key2': Int: lower=0, upper=3, 'key3': 'constant'}
+
+
+Get one example configuration:
+
+
+.. code-block:: default
+
+    print(g.rand)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    {'key1': 'beta', 'key2': 3, 'key3': 'constant'}
+
+
+Decorators for Searchbale Object and Customized Training Scripts
+----------------------------------------------------------------
+In this section, we show how to insert search space into customized objects and training functions.
+
+- Searchable Space in Customized Class :func:`autotorch.obj`
+
+In AutoTorch searchable object can be returned by a user defined class with a decorator.
+
+
+.. code-block:: default
+
+
+    @at.obj(
+        name=at.Choice('auto', 'gluon'),
+        static_value=10,
+        rank=at.Int(2, 5),
+    )
+    class MyObj:
+        def __init__(self, name, rank, static_value):
+            self.name = name
+            self.rank = rank
+            self.static_value = static_value
+        def __repr__(self):
+            repr = 'MyObj -- name: {}, rank: {}, static_value: {}'.format(
+                    self.name, self.rank, self.static_value)
+            return repr
+    h = MyObj()
+    print(h)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    AutoTorchObject -- MyObj
+
+
+Get one example random object:
+
+
+.. code-block:: default
+
+    print(h.rand)
+
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    MyObj -- name: gluon, rank: 2, static_value: 10
+
+
+.. _NestedExampleObj:
+We can also use it within a Nested Space such as :class:`autotorch.space.Choice`.
+In this example, the resulting nested space will be sampled from: 
+
+
+.. code-block:: default
+
+
+    nested = at.Choice(
+            at.Dict(
+                    obj1='1',
+                    obj2=at.Choice('a', 'b'),
+                ),
+            MyObj(),
+        )
+
+    print(nested)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Choice[Dict{'obj1': '1', 'obj2': Choice['a', 'b']}, AutoTorchObject -- MyObj]
+
+
+Get an example output:
+
+
+.. code-block:: default
+
+
+    for _ in range(5):
+        result = nested.rand
+        assert (isinstance(result, dict) and result['obj2'] in ['a', 'b']) or hasattr(result, 'name')
+        print(result)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    MyObj -- name: auto, rank: 5, static_value: 10
+    {'obj1': '1', 'obj2': 'b'}
+    MyObj -- name: gluon, rank: 3, static_value: 10
+    MyObj -- name: gluon, rank: 5, static_value: 10
+    MyObj -- name: gluon, rank: 5, static_value: 10
+
+
+- Searchable Space in Customized Function :func:`autotorch.obj`
+
+We can also insert a searchable space in a customized function:
+
+
+.. code-block:: default
+
+
+    @at.func(
+        framework=at.Choice('mxnet', 'pytorch'),
+    )
+    def myfunc(framework):
+        return framework
+    i = myfunc()
+    print(i)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    AutoTorchObject
+
+
+We can also put a searchable space inside a nested space:
+
+
+
+.. code-block:: default
+
+
+    j = at.Dict(
+            a=at.Real(0, 10),
+            obj1=MyObj(),
+            obj2=myfunc(),
+        )
+    print(j)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    Dict{'a': Real: lower=0, upper=10, 'obj1': AutoTorchObject -- MyObj, 'obj2': AutoTorchObject}
+
+
+- Customized Train Script Using :func:`autotorch.args`
+
+`train_func` is where to put your model training script, which takes in various keyword `args` as its hyperparameters and reports the performance of the trained model using the provided `reporter`. Here, we show a dummy train_func that simply prints these objects.
+
+
+
+.. code-block:: default
+
+
+    @at.args(
+        a=at.Int(1, 10),
+        b=at.Real(1e-3, 1e-2),
+        c=at.Real(1e-3, 1e-2, log=True),
+        d=at.Choice('a', 'b', 'c', 'd'),
+        e=at.Bool(),
+        f=at.List(
+                at.Int(1, 2),
+                at.Choice(4, 5),
+            ),
+        g=at.Dict(
+                a=at.Real(0, 10),
+                obj=MyObj(),
+            ),
+        h=at.Choice('test', MyObj()),
+        i = myfunc(),
+    )
+    def train_fn(args, reporter):
+        print('args: {}'.format(args))
+
+
+
+
+
+
+
+Create Searcher and Run with a Configuration
+--------------------------------------------
+In this section, we create a Searcher object, which orchestrates a particular hyperparameter-tuning strategy.
+
+- Create a Searcher and Sample Configuration
+
+
+
+.. code-block:: default
+
+    searcher = at.searcher.RandomSearcher(train_fn.cs)
+    config = searcher.get_config()
+    print(config)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    {'a': 6, 'b': 0.0055, 'c': 0.0031622777, 'd.choice': 0, 'e.choice': 0, 'f.0': 2, 'f.1.choice': 0, 'g.a': 5.0, 'g.obj.name.choice': 0, 'g.obj.rank': 4, 'h.1.name.choice': 0, 'h.1.rank': 4, 'h.choice': 0, 'i.framework.choice': 0}
+
+
+- Run one training job with the sampled configuration:
+
+
+
+.. code-block:: default
+
+    train_fn(train_fn.args, config)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    args: {'a': 6, 'b': 0.0055, 'c': 0.0031622777, 'd': 'a', 'e': True, 'f': [2, 4], 'g': {'a': 5.0, 'obj': MyObj -- name: auto, rank: 4, static_value: 10}, 'h': 'test', 'i': 'mxnet', '_default_config': {}}
+
+
+
+.. rst-class:: sphx-glr-timing
+
+   **Total running time of the script:** ( 0 minutes  0.114 seconds)
+
+
+.. _sphx_glr_download_course_search_space.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Python source code: search_space.py <search_space.py>`
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: search_space.ipynb <search_space.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.readthedocs.io>`_

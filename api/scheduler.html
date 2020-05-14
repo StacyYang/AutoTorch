@@ -1,0 +1,719 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>autotorch.scheduler &mdash; AutoTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="autotorch.searcher" href="searcher.html" />
+    <link rel="prev" title="autotorch" href="core.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://autotorch.org/" aria-label="AutoTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <!--li class="active">
+            <a href="https://autotorch.org//tutorials">Tutorials</a>
+          </li-->
+
+          <li>
+            <a href="https://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  master (0.0.2b20200514)
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">autotorch</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">autotorch.scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searcher.html">autotorch.searcher</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Learning AutoTorch</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../course/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course/course.html">Learning AutoTorch: A 30 Minutes Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../course/distributed.html">Distributed Search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+      <li>autotorch.scheduler</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/scheduler.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">api/scheduler</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="section" id="autotorch-scheduler">
+<h1>autotorch.scheduler<a class="headerlink" href="#autotorch-scheduler" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fifoscheduler">
+<h2><span class="hidden-section">FIFOScheduler</span><a class="headerlink" href="#fifoscheduler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="autotorch.scheduler.FIFOScheduler">
+<em class="property">class </em><code class="sig-prename descclassname">autotorch.scheduler.</code><code class="sig-name descname">FIFOScheduler</code><span class="sig-paren">(</span><em class="sig-param">train_fn</em>, <em class="sig-param">args=None</em>, <em class="sig-param">resource=None</em>, <em class="sig-param">searcher=None</em>, <em class="sig-param">search_options=None</em>, <em class="sig-param">checkpoint='./exp/checkpoint.ag'</em>, <em class="sig-param">resume=False</em>, <em class="sig-param">num_trials=None</em>, <em class="sig-param">time_out=None</em>, <em class="sig-param">max_reward=1.0</em>, <em class="sig-param">time_attr='epoch'</em>, <em class="sig-param">reward_attr='accuracy'</em>, <em class="sig-param">visualizer='none'</em>, <em class="sig-param">dist_ip_addrs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple scheduler that just runs trials in submission order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_fn</strong> (<em>callable</em>) – A task launch function for training. Note: please add the <cite>&#64;autotorch_method</cite> decorater to the original function.</p></li>
+<li><p><strong>args</strong> (<em>object</em><em> (</em><em>optional</em><em>)</em>) – Default arguments for launching train_fn.</p></li>
+<li><p><strong>resource</strong> (<em>dict</em>) – Computation resources. For example, <cite>{‘num_cpus’:2, ‘num_gpus’:1}</cite></p></li>
+<li><p><strong>searcher</strong> (<em>str</em><em> or </em><em>object</em>) – Autotorch searcher. For example, autotorch.searcher.self.argsRandomSampling</p></li>
+<li><p><strong>time_attr</strong> (<em>str</em>) – A training result attr to use for comparing time.
+Note that you can pass in something non-temporal such as
+<cite>training_epoch</cite> as a measure of progress, the only requirement
+is that the attribute should increase monotonically.</p></li>
+<li><p><strong>reward_attr</strong> (<em>str</em>) – The training result objective value attribute. As with <cite>time_attr</cite>, this may refer to any objective value.
+Stopping procedures will use this attribute.</p></li>
+<li><p><strong>dist_ip_addrs</strong> (<em>list of str</em>) – IP addresses of remote machines.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">autotorch</span> <span class="k">as</span> <span class="nn">at</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@at</span><span class="o">.</span><span class="n">args</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">lr</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">wd</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">train_fn</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">reporter</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;lr: </span><span class="si">{}</span><span class="s1">, wd: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">wd</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="n">dummy_accuracy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="n">reporter</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="n">dummy_accuracy</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span> <span class="n">wd</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">wd</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">FIFOScheduler</span><span class="p">(</span><span class="n">train_fn</span><span class="p">,</span>
+<span class="gp">... </span>                                       <span class="n">resource</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;num_gpus&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+<span class="gp">... </span>                                       <span class="n">num_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="gp">... </span>                                       <span class="n">reward_attr</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                       <span class="n">time_attr</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">join_jobs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_training_curves</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.add_job">
+<code class="sig-name descname">add_job</code><span class="sig-paren">(</span><em class="sig-param">task</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.add_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.add_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adding a training task to the scheduler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.scheduler.Task</span></code>) – a new training task</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Relevant entries in kwargs:</dt><dd><ul class="simple">
+<li><p>bracket: HB bracket to be used. Has been sampled in _promote_config</p></li>
+<li><p>new_config: If True, task starts new config eval, otherwise it promotes
+a config (only if type == ‘promotion’)</p></li>
+</ul>
+</dd>
+<dt>Only if new_config == False:</dt><dd><ul class="simple">
+<li><p>config_key: Internal key for config</p></li>
+<li><p>resume_from: config promoted from this milestone</p></li>
+<li><p>milestone: config promoted to this milestone (next from resume_from)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.get_best_config">
+<code class="sig-name descname">get_best_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.get_best_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.get_best_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best configuration from the finished jobs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.get_best_reward">
+<code class="sig-name descname">get_best_reward</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.get_best_reward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.get_best_reward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best reward from the finished jobs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.get_training_curves">
+<code class="sig-name descname">get_training_curves</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em>, <em class="sig-param">plot=False</em>, <em class="sig-param">use_legend=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.get_training_curves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.get_training_curves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Training Curves</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – </p></li>
+<li><p><strong>plot</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>use_legend</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">join_jobs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_training_curves</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><img alt="https://github.com/zhanghang1989/AutoGluonWebdata/blob/master/doc/api/autogluon.1.png?raw=true" src="https://github.com/zhanghang1989/AutoGluonWebdata/blob/master/doc/api/autogluon.1.png?raw=true" />
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.load_state_dict">
+<code class="sig-name descname">load_state_dict</code><span class="sig-paren">(</span><em class="sig-param">state_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.load_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.load_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load from the saved state dict.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">at</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;checkpoint.ag&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run multiple number of trials</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.run_with_config">
+<code class="sig-name descname">run_with_config</code><span class="sig-paren">(</span><em class="sig-param">config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.run_with_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.run_with_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run with config for final fit.
+It launches a single training trial under any fixed values of the hyperparameters.
+For example, after HPO has identified the best hyperparameter values based on a hold-out dataset,
+one can use this function to retrain a model with the same hyperparameters on all the available labeled data
+(including the hold out set). It can also returns other objects or states.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">checkpoint=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save Checkpoint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.schedule_next">
+<code class="sig-name descname">schedule_next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.schedule_next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.schedule_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schedule next searcher suggested task</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.FIFOScheduler.state_dict">
+<code class="sig-name descname">state_dict</code><span class="sig-paren">(</span><em class="sig-param">destination=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/fifo.html#FIFOScheduler.state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.FIFOScheduler.state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing a whole state of the Scheduler</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">at</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">scheduler</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;checkpoint.ag&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="hyperbandscheduler">
+<h2><span class="hidden-section">HyperbandScheduler</span><a class="headerlink" href="#hyperbandscheduler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="autotorch.scheduler.HyperbandScheduler">
+<em class="property">class </em><code class="sig-prename descclassname">autotorch.scheduler.</code><code class="sig-name descname">HyperbandScheduler</code><span class="sig-paren">(</span><em class="sig-param">train_fn</em>, <em class="sig-param">args=None</em>, <em class="sig-param">resource=None</em>, <em class="sig-param">searcher=None</em>, <em class="sig-param">search_options=None</em>, <em class="sig-param">checkpoint='./exp/checkpoint.ag'</em>, <em class="sig-param">resume=False</em>, <em class="sig-param">num_trials=None</em>, <em class="sig-param">time_out=None</em>, <em class="sig-param">max_reward=1.0</em>, <em class="sig-param">time_attr='epoch'</em>, <em class="sig-param">reward_attr='accuracy'</em>, <em class="sig-param">max_t=100</em>, <em class="sig-param">grace_period=10</em>, <em class="sig-param">reduction_factor=4</em>, <em class="sig-param">brackets=1</em>, <em class="sig-param">visualizer='none'</em>, <em class="sig-param">type='stopping'</em>, <em class="sig-param">dist_ip_addrs=None</em>, <em class="sig-param">keep_size_ratios=False</em>, <em class="sig-param">maxt_pending=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/hyperband.html#HyperbandScheduler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.HyperbandScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements different variants of asynchronous Hyperband</p>
+<p>See ‘type’ for the different variants. One implementation detail is when
+using multiple brackets, task allocation to bracket is done randomly
+based on a softmax probability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_fn</strong> (<em>callable</em>) – A task launch function for training.</p></li>
+<li><p><strong>args</strong> (<em>object</em><em>, </em><em>optional</em>) – Default arguments for launching train_fn.</p></li>
+<li><p><strong>resource</strong> (<em>dict</em>) – Computation resources.  For example, <cite>{‘num_cpus’:2, ‘num_gpus’:1}</cite></p></li>
+<li><p><strong>searcher</strong> (<em>object</em><em>, </em><em>optional</em>) – Autotorch searcher.  For example, <a class="reference internal" href="searcher.html#autotorch.searcher.RandomSearcher" title="autotorch.searcher.RandomSearcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.searcher.RandomSearcher</span></code></a></p></li>
+<li><p><strong>time_attr</strong> (<em>str</em>) – A training result attr to use for comparing time.
+Note that you can pass in something non-temporal such as
+<cite>training_epoch</cite> as a measure of progress, the only requirement
+is that the attribute should increase monotonically.</p></li>
+<li><p><strong>reward_attr</strong> (<em>str</em>) – The training result objective value attribute. As with <cite>time_attr</cite>, this may refer to any objective value.
+Stopping procedures will use this attribute.</p></li>
+<li><p><strong>max_t</strong> (<em>float</em>) – max time units per task.  Trials will be stopped after max_t time units (determined by
+time_attr) have passed.</p></li>
+<li><p><strong>grace_period</strong> (<em>float</em>) – Only stop tasks at least this old in time.  Also: min_t. The units are the same as the attribute named by
+<cite>time_attr</cite>.</p></li>
+<li><p><strong>reduction_factor</strong> (<em>float</em>) – Used to set halving rate and amount.  This is simply a unit-less scalar.</p></li>
+<li><p><strong>brackets</strong> (<em>int</em>) – Number of brackets. Each bracket has a different
+grace period, all share max_t and reduction_factor.
+If brackets == 1, we just run successive halving, for
+brackets &gt; 1, we run Hyperband.</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – <dl class="simple">
+<dt>Type of Hyperband scheduler:</dt><dd><dl class="simple">
+<dt>stopping:</dt><dd><p>See <code class="xref py py-class docutils literal notranslate"><span class="pre">HyperbandStopping_Manager</span></code>. Tasks and config evals are
+tightly coupled. A task is stopped at a milestone if worse than
+most others, otherwise it continues. As implemented in Ray/Tune:
+<a class="reference external" href="https://ray.readthedocs.io/en/latest/tune-schedulers.html#asynchronous-hyperband">https://ray.readthedocs.io/en/latest/tune-schedulers.html#asynchronous-hyperband</a></p>
+</dd>
+<dt>promotion:</dt><dd><p>See <code class="xref py py-class docutils literal notranslate"><span class="pre">HyperbandPromotion_Manager</span></code>. A config eval may be
+associated with multiple tasks over its lifetime. It is never
+terminated, but may be paused. Whenever a task becomes available,
+it may promote a config to the next milestone, if better than most
+others. If no config can be promoted, a new one is chosen. This
+variant may benefit from pause&amp;resume, which is not directly
+supported here. As proposed in this paper (termed ASHA):
+<a class="reference external" href="https://arxiv.org/abs/1810.05934">https://arxiv.org/abs/1810.05934</a></p>
+</dd>
+</dl>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>keep_size_ratios</strong> (<em>bool</em>) – Implemented for type ‘promotion’ only. If True,
+promotions are done only if the (current estimate of the) size ratio
+between rung and next rung are 1 / reduction_factor or better. This
+avoids higher rungs to get more populated than they would be in
+synchronous Hyperband. A drawback is that promotions to higher rungs
+take longer.</p></li>
+<li><p><strong>maxt_pending</strong> (<em>bool</em>) – Relevant only if a model-based searcher is used.
+If True, register pending config at level max_t
+whenever a new evaluation is started. This has a direct effect on
+the acquisition function (for model-based variant), which operates
+at level max_t. On the other hand, it decreases the variance of the
+latent process there.
+NOTE: This could also be removed…</p></li>
+<li><p><strong>dist_ip_addrs</strong> (<em>list of str</em>) – IP addresses of remote machines.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">autotorch</span> <span class="k">as</span> <span class="nn">at</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@at</span><span class="o">.</span><span class="n">args</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">lr</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">wd</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">train_fn</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">reporter</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;lr: </span><span class="si">{}</span><span class="s1">, wd: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">wd</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="n">dummy_accuracy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="n">reporter</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="n">dummy_accuracy</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">,</span> <span class="n">wd</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">wd</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">HyperbandScheduler</span><span class="p">(</span><span class="n">train_fn</span><span class="p">,</span>
+<span class="gp">... </span>                                            <span class="n">resource</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;num_gpus&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+<span class="gp">... </span>                                            <span class="n">num_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+<span class="gp">... </span>                                            <span class="n">reward_attr</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                            <span class="n">time_attr</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                            <span class="n">grace_period</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">join_jobs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_training_curves</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="autotorch.scheduler.HyperbandScheduler.add_job">
+<code class="sig-name descname">add_job</code><span class="sig-paren">(</span><em class="sig-param">task</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/hyperband.html#HyperbandScheduler.add_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.HyperbandScheduler.add_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adding a training task to the scheduler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.scheduler.Task</span></code>) – a new training task</p>
+</dd>
+</dl>
+<p>Relevant entries in kwargs:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>bracket: HB bracket to be used. Has been sampled in _promote_config</p></li>
+<li><p>new_config: If True, task starts new config eval, otherwise it promotes
+a config (only if type == ‘promotion’)</p></li>
+</ul>
+</div></blockquote>
+<p>Only if new_config == False:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>config_key: Internal key for config</p></li>
+<li><p>resume_from: config promoted from this milestone</p></li>
+<li><p>milestone: config promoted to this milestone (next from resume_from)</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.HyperbandScheduler.load_state_dict">
+<code class="sig-name descname">load_state_dict</code><span class="sig-paren">(</span><em class="sig-param">state_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/hyperband.html#HyperbandScheduler.load_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.HyperbandScheduler.load_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load from the saved state dict.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">at</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;checkpoint.ag&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="autotorch.scheduler.HyperbandScheduler.state_dict">
+<code class="sig-name descname">state_dict</code><span class="sig-paren">(</span><em class="sig-param">destination=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/autotorch/scheduler/hyperband.html#HyperbandScheduler.state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#autotorch.scheduler.HyperbandScheduler.state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing a whole state of the Scheduler</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">at</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">scheduler</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;checkpoint.ag&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="searcher.html" class="btn btn-neutral float-right" title="autotorch.searcher" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="core.html" class="btn btn-neutral" title="autotorch" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr class="helpful-hr hr-top">
+      <div class="helpful-container">
+        <div class="helpful-question">Was this helpful?</div>
+        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
+        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
+        <div class="was-helpful-thank-you">Thank you</div>
+      </div>
+    <hr class="helpful-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stacy Yang.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+    
+
+  <!--  -->
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">autotorch.scheduler</a><ul>
+<li><a class="reference internal" href="#fifoscheduler"><span class="hidden-section">FIFOScheduler</span></a></li>
+<li><a class="reference internal" href="#hyperbandscheduler"><span class="hidden-section">HyperbandScheduler</span></a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/language_data.js"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!--div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for AutoTorch</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="#">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div-->
+
+  <!--footer class="site-footer">
+  </footer-->
+
+  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="http://autotorch.org/" aria-label="AutoTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <!--div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          
+          <li class="active">
+            <a href="http://autotorch.org/">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="http://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div-->
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

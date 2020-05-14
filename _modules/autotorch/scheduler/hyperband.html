@@ -1,0 +1,711 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>autotorch.scheduler.hyperband &mdash; AutoTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://autotorch.org/" aria-label="AutoTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <!--li class="active">
+            <a href="https://autotorch.org//tutorials">Tutorials</a>
+          </li-->
+
+          <li>
+            <a href="https://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  master (0.0.2b20200514)
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/core.html">autotorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/scheduler.html">autotorch.scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/searcher.html">autotorch.searcher</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Learning AutoTorch</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../course/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../course/course.html">Learning AutoTorch: A 30 Minutes Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../course/distributed.html">Distributed Search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../../../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="../../index.html">Module code</a> &gt;</li>
+        
+      <li>autotorch.scheduler.hyperband</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">_modules/autotorch/scheduler/hyperband</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../../../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../../../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../../../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <h1>Source code for autotorch.scheduler.hyperband</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+
+<span class="kn">from</span> <span class="nn">.fifo</span> <span class="kn">import</span> <span class="n">FIFOScheduler</span>
+<span class="kn">from</span> <span class="nn">.hyperband_stopping</span> <span class="kn">import</span> <span class="n">HyperbandStopping_Manager</span>
+<span class="kn">from</span> <span class="nn">.hyperband_promotion</span> <span class="kn">import</span> <span class="n">HyperbandPromotion_Manager</span>
+<span class="kn">from</span> <span class="nn">.reporter</span> <span class="kn">import</span> <span class="n">DistStatusReporter</span><span class="p">,</span> <span class="n">DistSemaphore</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">DeprecationHelper</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;HyperbandScheduler&#39;</span><span class="p">,</span> <span class="s1">&#39;HyperbandStopping_Manager&#39;</span><span class="p">,</span> <span class="s1">&#39;HyperbandPromotion_Manager&#39;</span><span class="p">]</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="HyperbandScheduler"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.HyperbandScheduler">[docs]</a><span class="k">class</span> <span class="nc">HyperbandScheduler</span><span class="p">(</span><span class="n">FIFOScheduler</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Implements different variants of asynchronous Hyperband</span>
+
+<span class="sd">    See &#39;type&#39; for the different variants. One implementation detail is when</span>
+<span class="sd">    using multiple brackets, task allocation to bracket is done randomly </span>
+<span class="sd">    based on a softmax probability.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    train_fn : callable</span>
+<span class="sd">        A task launch function for training.</span>
+<span class="sd">    args : object, optional</span>
+<span class="sd">        Default arguments for launching train_fn.</span>
+<span class="sd">    resource : dict</span>
+<span class="sd">        Computation resources.  For example, `{&#39;num_cpus&#39;:2, &#39;num_gpus&#39;:1}`</span>
+<span class="sd">    searcher : object, optional</span>
+<span class="sd">        Autotorch searcher.  For example, :class:`autotorch.searcher.RandomSearcher`</span>
+<span class="sd">    time_attr : str</span>
+<span class="sd">        A training result attr to use for comparing time.</span>
+<span class="sd">        Note that you can pass in something non-temporal such as</span>
+<span class="sd">        `training_epoch` as a measure of progress, the only requirement</span>
+<span class="sd">        is that the attribute should increase monotonically.</span>
+<span class="sd">    reward_attr :str</span>
+<span class="sd">        The training result objective value attribute. As with `time_attr`, this may refer to any objective value.</span>
+<span class="sd">        Stopping procedures will use this attribute.</span>
+<span class="sd">    max_t : float</span>
+<span class="sd">        max time units per task.  Trials will be stopped after max_t time units (determined by</span>
+<span class="sd">        time_attr) have passed.</span>
+<span class="sd">    grace_period : float</span>
+<span class="sd">        Only stop tasks at least this old in time.  Also: min_t. The units are the same as the attribute named by</span>
+<span class="sd">        `time_attr`.</span>
+<span class="sd">    reduction_factor : float</span>
+<span class="sd">        Used to set halving rate and amount.  This is simply a unit-less scalar.</span>
+<span class="sd">    brackets : int</span>
+<span class="sd">        Number of brackets. Each bracket has a different</span>
+<span class="sd">        grace period, all share max_t and reduction_factor.</span>
+<span class="sd">        If brackets == 1, we just run successive halving, for</span>
+<span class="sd">        brackets &gt; 1, we run Hyperband.</span>
+<span class="sd">    type : str</span>
+<span class="sd">        Type of Hyperband scheduler:</span>
+<span class="sd">            stopping:</span>
+<span class="sd">                See :class:`HyperbandStopping_Manager`. Tasks and config evals are</span>
+<span class="sd">                tightly coupled. A task is stopped at a milestone if worse than</span>
+<span class="sd">                most others, otherwise it continues. As implemented in Ray/Tune:</span>
+<span class="sd">                https://ray.readthedocs.io/en/latest/tune-schedulers.html#asynchronous-hyperband</span>
+<span class="sd">            promotion:</span>
+<span class="sd">                See :class:`HyperbandPromotion_Manager`. A config eval may be</span>
+<span class="sd">                associated with multiple tasks over its lifetime. It is never</span>
+<span class="sd">                terminated, but may be paused. Whenever a task becomes available,</span>
+<span class="sd">                it may promote a config to the next milestone, if better than most</span>
+<span class="sd">                others. If no config can be promoted, a new one is chosen. This</span>
+<span class="sd">                variant may benefit from pause&amp;resume, which is not directly</span>
+<span class="sd">                supported here. As proposed in this paper (termed ASHA):</span>
+<span class="sd">                https://arxiv.org/abs/1810.05934</span>
+<span class="sd">    keep_size_ratios : bool</span>
+<span class="sd">        Implemented for type &#39;promotion&#39; only. If True,</span>
+<span class="sd">        promotions are done only if the (current estimate of the) size ratio</span>
+<span class="sd">        between rung and next rung are 1 / reduction_factor or better. This</span>
+<span class="sd">        avoids higher rungs to get more populated than they would be in</span>
+<span class="sd">        synchronous Hyperband. A drawback is that promotions to higher rungs</span>
+<span class="sd">        take longer.</span>
+<span class="sd">    maxt_pending : bool</span>
+<span class="sd">        Relevant only if a model-based searcher is used.</span>
+<span class="sd">        If True, register pending config at level max_t</span>
+<span class="sd">        whenever a new evaluation is started. This has a direct effect on</span>
+<span class="sd">        the acquisition function (for model-based variant), which operates</span>
+<span class="sd">        at level max_t. On the other hand, it decreases the variance of the</span>
+<span class="sd">        latent process there.</span>
+<span class="sd">        NOTE: This could also be removed...</span>
+<span class="sd">    dist_ip_addrs : list of str</span>
+<span class="sd">        IP addresses of remote machines.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; import autotorch as at</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; @at.args(</span>
+<span class="sd">    ...     lr=at.Real(1e-3, 1e-2, log=True),</span>
+<span class="sd">    ...     wd=at.Real(1e-3, 1e-2))</span>
+<span class="sd">    &gt;&gt;&gt; def train_fn(args, reporter):</span>
+<span class="sd">    ...     print(&#39;lr: {}, wd: {}&#39;.format(args.lr, args.wd))</span>
+<span class="sd">    ...     for e in range(10):</span>
+<span class="sd">    ...         dummy_accuracy = 1 - np.power(1.8, -np.random.uniform(e, 2*e))</span>
+<span class="sd">    ...         reporter(epoch=e, accuracy=dummy_accuracy, lr=args.lr, wd=args.wd)</span>
+<span class="sd">    &gt;&gt;&gt; scheduler = at.scheduler.HyperbandScheduler(train_fn,</span>
+<span class="sd">    ...                                             resource={&#39;num_cpus&#39;: 2, &#39;num_gpus&#39;: 0},</span>
+<span class="sd">    ...                                             num_trials=20,</span>
+<span class="sd">    ...                                             reward_attr=&#39;accuracy&#39;,</span>
+<span class="sd">    ...                                             time_attr=&#39;epoch&#39;,</span>
+<span class="sd">    ...                                             grace_period=1)</span>
+<span class="sd">    &gt;&gt;&gt; scheduler.run()</span>
+<span class="sd">    &gt;&gt;&gt; scheduler.join_jobs()</span>
+<span class="sd">    &gt;&gt;&gt; scheduler.get_training_curves(plot=True)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_fn</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">searcher</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;./exp/checkpoint.ag&#39;</span><span class="p">,</span>
+                 <span class="n">resume</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_trials</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">time_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_reward</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                 <span class="n">time_attr</span><span class="o">=</span><span class="s2">&quot;epoch&quot;</span><span class="p">,</span>
+                 <span class="n">reward_attr</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span>
+                 <span class="n">max_t</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">grace_period</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                 <span class="n">reduction_factor</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">brackets</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">visualizer</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span>
+                 <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;stopping&#39;</span><span class="p">,</span>
+                 <span class="n">dist_ip_addrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">keep_size_ratios</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">maxt_pending</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">train_fn</span><span class="o">=</span><span class="n">train_fn</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">searcher</span><span class="o">=</span><span class="n">searcher</span><span class="p">,</span>
+            <span class="n">search_options</span><span class="o">=</span><span class="n">search_options</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">resume</span><span class="o">=</span><span class="n">resume</span><span class="p">,</span>
+            <span class="n">num_trials</span><span class="o">=</span><span class="n">num_trials</span><span class="p">,</span> <span class="n">time_out</span><span class="o">=</span><span class="n">time_out</span><span class="p">,</span> <span class="n">max_reward</span><span class="o">=</span><span class="n">max_reward</span><span class="p">,</span> <span class="n">time_attr</span><span class="o">=</span><span class="n">time_attr</span><span class="p">,</span>
+            <span class="n">reward_attr</span><span class="o">=</span><span class="n">reward_attr</span><span class="p">,</span> <span class="n">visualizer</span><span class="o">=</span><span class="n">visualizer</span><span class="p">,</span> <span class="n">dist_ip_addrs</span><span class="o">=</span><span class="n">dist_ip_addrs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_t</span> <span class="o">=</span> <span class="n">max_t</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxt_pending</span> <span class="o">=</span> <span class="n">maxt_pending</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;stopping&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span> <span class="o">=</span> <span class="n">HyperbandStopping_Manager</span><span class="p">(</span>
+                <span class="n">time_attr</span><span class="p">,</span> <span class="n">reward_attr</span><span class="p">,</span> <span class="n">max_t</span><span class="p">,</span> <span class="n">grace_period</span><span class="p">,</span> <span class="n">reduction_factor</span><span class="p">,</span>
+                <span class="n">brackets</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;promotion&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span> <span class="o">=</span> <span class="n">HyperbandPromotion_Manager</span><span class="p">(</span>
+                <span class="n">time_attr</span><span class="p">,</span> <span class="n">reward_attr</span><span class="p">,</span> <span class="n">max_t</span><span class="p">,</span> <span class="n">grace_period</span><span class="p">,</span> <span class="n">reduction_factor</span><span class="p">,</span>
+                <span class="n">brackets</span><span class="p">,</span> <span class="n">keep_size_ratios</span><span class="o">=</span><span class="n">keep_size_ratios</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                <span class="s2">&quot;type &#39;</span><span class="si">{}</span><span class="s2">&#39; not supported, must be &#39;stopping&#39; or &#39;promotion&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="p">))</span>
+
+<div class="viewcode-block" id="HyperbandScheduler.add_job"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.HyperbandScheduler.add_job">[docs]</a>    <span class="k">def</span> <span class="nf">add_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adding a training task to the scheduler.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            task (:class:`autotorch.scheduler.Task`): a new training task</span>
+
+<span class="sd">        Relevant entries in kwargs:</span>
+
+<span class="sd">            - bracket: HB bracket to be used. Has been sampled in _promote_config</span>
+<span class="sd">            - new_config: If True, task starts new config eval, otherwise it promotes</span>
+<span class="sd">              a config (only if type == &#39;promotion&#39;)</span>
+
+<span class="sd">        Only if new_config == False:</span>
+
+<span class="sd">            - config_key: Internal key for config</span>
+<span class="sd">            - resume_from: config promoted from this milestone</span>
+<span class="sd">            - milestone: config promoted to this milestone (next from resume_from)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="n">HyperbandScheduler</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">is_ready</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">RESOURCE_MANAGER</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">resources</span><span class="p">)</span>
+        <span class="c1"># reporter and terminator</span>
+        <span class="n">reporter</span> <span class="o">=</span> <span class="n">DistStatusReporter</span><span class="p">(</span><span class="n">remote</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;reporter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reporter</span>
+
+        <span class="n">milestones</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span><span class="o">.</span><span class="n">on_task_add</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;new_config&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="n">first_milestone</span> <span class="o">=</span> <span class="n">milestones</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Adding new task (first milestone = </span><span class="si">{}</span><span class="s2">):</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">first_milestone</span><span class="p">,</span> <span class="n">task</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">register_pending</span><span class="p">(</span>
+                <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">],</span> <span class="n">first_milestone</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxt_pending</span><span class="p">:</span>
+                <span class="c1"># Also introduce pending evaluation for resource max_t</span>
+                <span class="n">final_milestone</span> <span class="o">=</span> <span class="n">milestones</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">final_milestone</span> <span class="o">!=</span> <span class="n">first_milestone</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">register_pending</span><span class="p">(</span>
+                        <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">],</span> <span class="n">final_milestone</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Promotion of config</span>
+            <span class="c1"># This is a signal towards train_fn, in case it supports</span>
+            <span class="c1"># pause and resume:</span>
+            <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;resume_from&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;resume_from&#39;</span><span class="p">]</span>
+            <span class="n">next_milestone</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;milestone&#39;</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Promotion task (next milestone = </span><span class="si">{}</span><span class="s2">):</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">next_milestone</span><span class="p">,</span> <span class="n">task</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">register_pending</span><span class="p">(</span>
+                <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">],</span> <span class="n">next_milestone</span><span class="p">)</span>
+
+        <span class="c1"># main process</span>
+        <span class="n">job</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_start_distributed_job</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">RESOURCE_MANAGER</span><span class="p">)</span>
+        <span class="c1"># reporter thread</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_run_reporter</span><span class="p">,</span>
+                              <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">reporter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span><span class="p">),</span>
+                              <span class="n">daemon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">rp</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">task_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict_from_task</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="n">task_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Task&#39;</span><span class="p">:</span> <span class="n">task</span><span class="p">,</span> <span class="s1">&#39;Job&#39;</span><span class="p">:</span> <span class="n">job</span><span class="p">,</span> <span class="s1">&#39;ReporterThread&#39;</span><span class="p">:</span> <span class="n">rp</span><span class="p">})</span>
+        <span class="c1"># checkpoint thread</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">_save_checkpoint_callback</span><span class="p">(</span><span class="n">fut</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cleaning_tasks</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">job</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">_save_checkpoint_callback</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOCK</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task_dict</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_run_reporter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">task_job</span><span class="p">,</span> <span class="n">reporter</span><span class="p">,</span> <span class="n">searcher</span><span class="p">,</span> <span class="n">terminator</span><span class="p">):</span>
+        <span class="n">last_result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">last_updated</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">task_job</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+            <span class="n">reported_result</span> <span class="o">=</span> <span class="n">reporter</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;traceback&#39;</span> <span class="ow">in</span> <span class="n">reported_result</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">reported_result</span><span class="p">[</span><span class="s1">&#39;traceback&#39;</span><span class="p">])</span>
+                <span class="n">reporter</span><span class="o">.</span><span class="n">move_on</span><span class="p">()</span>
+                <span class="n">terminator</span><span class="o">.</span><span class="n">on_task_remove</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">reported_result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;done&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="n">reporter</span><span class="o">.</span><span class="n">move_on</span><span class="p">()</span>
+                <span class="n">terminator</span><span class="o">.</span><span class="n">on_task_complete</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">last_result</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="c1"># Call before _add_training_results, since we may be able to report</span>
+            <span class="c1"># extra information from the bracket</span>
+            <span class="n">task_continues</span><span class="p">,</span> <span class="n">update_searcher</span><span class="p">,</span> <span class="n">next_milestone</span><span class="p">,</span> <span class="n">bracket_id</span><span class="p">,</span> <span class="n">rung_counts</span> <span class="o">=</span> \
+                <span class="n">terminator</span><span class="o">.</span><span class="n">on_task_report</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">reported_result</span><span class="p">)</span>
+            <span class="n">reported_result</span><span class="p">[</span><span class="s1">&#39;bracket&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bracket_id</span>
+            <span class="k">if</span> <span class="n">rung_counts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rung_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;count_at_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                    <span class="n">reported_result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_training_result</span><span class="p">(</span>
+                <span class="n">task</span><span class="o">.</span><span class="n">task_id</span><span class="p">,</span> <span class="n">reported_result</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">update_searcher</span> <span class="ow">and</span> <span class="n">task_continues</span><span class="p">:</span>
+                <span class="c1"># Update searcher with intermediate result</span>
+                <span class="c1"># Note: If task_continues is False here, we also call</span>
+                <span class="c1"># searcher.update, but outside the loop.</span>
+                <span class="n">searcher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">config</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">],</span>
+                    <span class="n">reward</span><span class="o">=</span><span class="n">reported_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_reward_attr</span><span class="p">],</span>
+                    <span class="o">**</span><span class="n">reported_result</span><span class="p">)</span>
+                <span class="n">last_updated</span> <span class="o">=</span> <span class="n">reported_result</span>
+                <span class="k">if</span> <span class="n">next_milestone</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">searcher</span><span class="o">.</span><span class="n">register_pending</span><span class="p">(</span>
+                        <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">],</span> <span class="n">next_milestone</span><span class="p">)</span>
+            <span class="n">last_result</span> <span class="o">=</span> <span class="n">reported_result</span>
+            <span class="k">if</span> <span class="n">task_continues</span><span class="p">:</span>
+                <span class="n">reporter</span><span class="o">.</span><span class="n">move_on</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Note: The &#39;terminated&#39; signal is sent even in the promotion</span>
+                <span class="c1"># variant. It means that the *task* terminates, while the evaluation</span>
+                <span class="c1"># of the config is just paused</span>
+                <span class="n">last_result</span><span class="p">[</span><span class="s1">&#39;terminated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;stopping&#39;</span> <span class="ow">or</span> \
+                        <span class="n">reported_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_time_attr</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_t</span><span class="p">:</span>
+                    <span class="n">act_str</span> <span class="o">=</span> <span class="s1">&#39;terminating&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">act_str</span> <span class="o">=</span> <span class="s1">&#39;pausing&#39;</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;Stopping task (</span><span class="si">{}</span><span class="s1"> evaluation, resource = </span><span class="si">{}</span><span class="s1">):</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">act_str</span><span class="p">,</span> <span class="n">reported_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_time_attr</span><span class="p">],</span> <span class="n">task</span><span class="p">))</span>
+                <span class="n">terminator</span><span class="o">.</span><span class="n">on_task_remove</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+                <span class="n">reporter</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+                <span class="c1">#task_process.join()</span>
+                <span class="k">break</span>
+        <span class="c1"># Pass all of last_result to searcher (unless this has already been</span>
+        <span class="c1"># done)</span>
+        <span class="k">if</span> <span class="n">last_result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">last_updated</span><span class="p">:</span>
+            <span class="n">last_result</span><span class="p">[</span><span class="s1">&#39;done&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">searcher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">],</span>
+                <span class="n">reward</span><span class="o">=</span><span class="n">last_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_reward_attr</span><span class="p">],</span> <span class="o">**</span><span class="n">last_result</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HyperbandScheduler.state_dict"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.HyperbandScheduler.state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a dictionary containing a whole state of the Scheduler</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; at.save(scheduler.state_dict(), &#39;checkpoint.ag&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">destination</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+        <span class="n">destination</span><span class="p">[</span><span class="s1">&#39;terminator&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">terminator</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">destination</span></div>
+
+<div class="viewcode-block" id="HyperbandScheduler.load_state_dict"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.HyperbandScheduler.load_state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load from the saved state dict.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; scheduler.load_state_dict(at.load(&#39;checkpoint.ag&#39;))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">state_dict</span><span class="p">[</span><span class="s1">&#39;terminator&#39;</span><span class="p">])</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Loading Terminator State </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">terminator</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_promote_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">config</span><span class="p">,</span> <span class="n">extra_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span><span class="o">.</span><span class="n">on_task_schedule</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">config</span><span class="p">,</span> <span class="n">extra_kwargs</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reprstr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span>  \
+            <span class="s1">&#39;terminator: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">terminator</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reprstr</span></div>
+</pre></div>
+
+             </article>
+             
+            </div>
+            <footer>
+  
+
+  
+
+    <hr class="helpful-hr hr-top">
+      <div class="helpful-container">
+        <div class="helpful-question">Was this helpful?</div>
+        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
+        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
+        <div class="was-helpful-thank-you">Thank you</div>
+      </div>
+    <hr class="helpful-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stacy Yang.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+    
+
+  <!--  -->
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+         <script src="../../../_static/jquery.js"></script>
+         <script src="../../../_static/underscore.js"></script>
+         <script src="../../../_static/doctools.js"></script>
+         <script src="../../../_static/language_data.js"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!--div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for AutoTorch</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="#">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div-->
+
+  <!--footer class="site-footer">
+  </footer-->
+
+  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="http://autotorch.org/" aria-label="AutoTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <!--div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          
+          <li class="active">
+            <a href="http://autotorch.org/">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="http://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div-->
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../../../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,775 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>autotorch.scheduler.fifo &mdash; AutoTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://autotorch.org/" aria-label="AutoTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <!--li class="active">
+            <a href="https://autotorch.org//tutorials">Tutorials</a>
+          </li-->
+
+          <li>
+            <a href="https://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  master (0.0.2b20200514)
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/core.html">autotorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/scheduler.html">autotorch.scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/searcher.html">autotorch.searcher</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Learning AutoTorch</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../course/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../course/course.html">Learning AutoTorch: A 30 Minutes Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../course/distributed.html">Distributed Search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../../../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="../../index.html">Module code</a> &gt;</li>
+        
+      <li>autotorch.scheduler.fifo</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">_modules/autotorch/scheduler/fifo</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../../../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../../../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../../../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <h1>Source code for autotorch.scheduler.fifo</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">.reporter</span> <span class="kn">import</span> <span class="n">DistStatusReporter</span><span class="p">,</span> <span class="n">FakeReporter</span>
+<span class="kn">from</span> <span class="nn">.resource</span> <span class="kn">import</span> <span class="n">DistributedResource</span>
+<span class="kn">from</span> <span class="nn">.scheduler</span> <span class="kn">import</span> <span class="n">TaskScheduler</span>
+<span class="kn">from</span> <span class="nn">..core</span> <span class="kn">import</span> <span class="n">Task</span>
+<span class="kn">from</span> <span class="nn">..core.decorator</span> <span class="kn">import</span> <span class="n">_autotorch_method</span>
+<span class="kn">from</span> <span class="nn">..searcher</span> <span class="kn">import</span> <span class="n">BaseSearcher</span>
+<span class="kn">from</span> <span class="nn">..searcher.searcher_factory</span> <span class="kn">import</span> <span class="n">searcher_factory</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">save</span><span class="p">,</span> <span class="n">load</span><span class="p">,</span> <span class="n">mkdir</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;FIFOScheduler&#39;</span><span class="p">]</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="FIFOScheduler"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler">[docs]</a><span class="k">class</span> <span class="nc">FIFOScheduler</span><span class="p">(</span><span class="n">TaskScheduler</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Simple scheduler that just runs trials in submission order.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    train_fn : callable</span>
+<span class="sd">        A task launch function for training. Note: please add the `@autotorch_method` decorater to the original function.</span>
+<span class="sd">    args : object (optional)</span>
+<span class="sd">        Default arguments for launching train_fn.</span>
+<span class="sd">    resource : dict</span>
+<span class="sd">        Computation resources. For example, `{&#39;num_cpus&#39;:2, &#39;num_gpus&#39;:1}`</span>
+<span class="sd">    searcher : str or object</span>
+<span class="sd">        Autotorch searcher. For example, autotorch.searcher.self.argsRandomSampling</span>
+<span class="sd">    time_attr : str</span>
+<span class="sd">            A training result attr to use for comparing time.</span>
+<span class="sd">            Note that you can pass in something non-temporal such as</span>
+<span class="sd">            `training_epoch` as a measure of progress, the only requirement</span>
+<span class="sd">            is that the attribute should increase monotonically.</span>
+<span class="sd">    reward_attr : str</span>
+<span class="sd">        The training result objective value attribute. As with `time_attr`, this may refer to any objective value.</span>
+<span class="sd">        Stopping procedures will use this attribute.</span>
+<span class="sd">    dist_ip_addrs : list of str</span>
+<span class="sd">        IP addresses of remote machines.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; import autotorch as at</span>
+<span class="sd">    &gt;&gt;&gt; @at.args(</span>
+<span class="sd">    ...     lr=at.Real(1e-3, 1e-2, log=True),</span>
+<span class="sd">    ...     wd=at.Real(1e-3, 1e-2))</span>
+<span class="sd">    &gt;&gt;&gt; def train_fn(args, reporter):</span>
+<span class="sd">    ...     print(&#39;lr: {}, wd: {}&#39;.format(args.lr, args.wd))</span>
+<span class="sd">    ...     for e in range(10):</span>
+<span class="sd">    ...         dummy_accuracy = 1 - np.power(1.8, -np.random.uniform(e, 2*e))</span>
+<span class="sd">    ...         reporter(epoch=e, accuracy=dummy_accuracy, lr=args.lr, wd=args.wd)</span>
+<span class="sd">    &gt;&gt;&gt; scheduler = at.scheduler.FIFOScheduler(train_fn,</span>
+<span class="sd">    ...                                        resource={&#39;num_cpus&#39;: 2, &#39;num_gpus&#39;: 0},</span>
+<span class="sd">    ...                                        num_trials=20,</span>
+<span class="sd">    ...                                        reward_attr=&#39;accuracy&#39;,</span>
+<span class="sd">    ...                                        time_attr=&#39;epoch&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; scheduler.run()</span>
+<span class="sd">    &gt;&gt;&gt; scheduler.join_jobs()</span>
+<span class="sd">    &gt;&gt;&gt; scheduler.get_training_curves(plot=True)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_fn</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">searcher</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">checkpoint</span><span class="o">=</span><span class="s1">&#39;./exp/checkpoint.ag&#39;</span><span class="p">,</span>
+                 <span class="n">resume</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_trials</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">time_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_reward</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">time_attr</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span>
+                 <span class="n">reward_attr</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">,</span>
+                 <span class="n">visualizer</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">dist_ip_addrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dist_ip_addrs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">resource</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;num_gpus&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="n">resource</span>
+
+        <span class="k">if</span> <span class="n">searcher</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">searcher</span> <span class="o">=</span> <span class="s1">&#39;random&#39;</span>  <span class="c1"># Default: Random searcher</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">searcher</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="n">search_options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">search_options</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;configspace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_fn</span><span class="o">.</span><span class="n">cs</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="p">:</span> <span class="n">BaseSearcher</span> <span class="o">=</span> <span class="n">searcher_factory</span><span class="p">(</span><span class="n">searcher</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">searcher</span><span class="p">,</span> <span class="n">BaseSearcher</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="p">:</span> <span class="n">BaseSearcher</span> <span class="o">=</span> <span class="n">searcher</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">train_fn</span><span class="p">,</span> <span class="n">_autotorch_method</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_fn</span> <span class="o">=</span> <span class="n">train_fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="n">train_fn</span><span class="o">.</span><span class="n">args</span>
+
+        <span class="c1"># meta data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;search_space&#39;</span><span class="p">:</span> <span class="n">train_fn</span><span class="o">.</span><span class="n">kwspaces</span><span class="p">,</span>
+            <span class="s1">&#39;search_strategy&#39;</span><span class="p">:</span> <span class="n">searcher</span><span class="p">,</span>
+            <span class="s1">&#39;stop_criterion&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;time_limits&#39;</span><span class="p">:</span> <span class="n">time_out</span><span class="p">,</span> <span class="s1">&#39;max_reward&#39;</span><span class="p">:</span> <span class="n">max_reward</span><span class="p">},</span>
+            <span class="s1">&#39;resources_per_trial&#39;</span><span class="p">:</span> <span class="n">resource</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_trials</span> <span class="o">=</span> <span class="n">num_trials</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span> <span class="o">=</span> <span class="n">time_out</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_reward</span> <span class="o">=</span> <span class="n">max_reward</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoint</span> <span class="o">=</span> <span class="n">checkpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time_attr</span> <span class="o">=</span> <span class="n">time_attr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reward_attr</span> <span class="o">=</span> <span class="n">reward_attr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span> <span class="o">=</span> <span class="n">visualizer</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_lock</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">training_history</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_history</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">resume</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">load</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;checkpoint path </span><span class="si">{checkpoint}</span><span class="s1"> is not available for resume.&#39;</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">FileExistsError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FIFOScheduler.run"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run multiple number of trials</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">num_trials</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;num_trials&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_trials</span><span class="p">)</span>
+        <span class="n">time_out</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;time_out&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Starting Experiments&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Num of Finished Tasks is </span><span class="si">{self.num_finished_tasks}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Num of Pending Tasks is {num_trials - self.num_finished_tasks}&#39;</span><span class="p">)</span>
+        <span class="n">tbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_finished_tasks</span><span class="p">,</span> <span class="n">num_trials</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tbar</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">time_out</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">time_out</span> \
+                    <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_reward</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_best_reward</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_reward</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">schedule_next</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FIFOScheduler.save"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save Checkpoint</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">checkpoint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoint</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Checkpointing is disabled&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">checkpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoint</span>
+        <span class="k">if</span> <span class="n">checkpoint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOCK</span><span class="p">:</span>
+                <span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">))</span>
+                <span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">checkpoint</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FIFOScheduler.schedule_next"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.schedule_next">[docs]</a>    <span class="k">def</span> <span class="nf">schedule_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Schedule next searcher suggested task</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Allow for the promotion of a previously chosen config. Also,</span>
+        <span class="c1"># extra_kwargs contains extra info passed to both add_job and to</span>
+        <span class="c1"># get_config (if no config is promoted)</span>
+
+        <span class="c1"># request resource first</span>
+        <span class="n">resources</span> <span class="o">=</span> <span class="n">DistributedResource</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="p">)</span>
+        <span class="n">FIFOScheduler</span><span class="o">.</span><span class="n">RESOURCE_MANAGER</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="n">resources</span><span class="p">)</span>
+
+        <span class="n">config</span><span class="p">,</span> <span class="n">extra_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_promote_config</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># No config to promote: Query next config to evaluate from searcher</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="o">**</span><span class="n">extra_kwargs</span><span class="p">)</span>
+            <span class="n">extra_kwargs</span><span class="p">[</span><span class="s1">&#39;new_config&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># This is not a new config, but a paused one which is now promoted</span>
+            <span class="n">extra_kwargs</span><span class="p">[</span><span class="s1">&#39;new_config&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_fn</span><span class="p">,</span>
+            <span class="p">{</span><span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="s1">&#39;config&#39;</span><span class="p">:</span> <span class="n">config</span><span class="p">},</span>
+            <span class="n">resources</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_job</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FIFOScheduler.run_with_config"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.run_with_config">[docs]</a>    <span class="k">def</span> <span class="nf">run_with_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run with config for final fit.</span>
+<span class="sd">        It launches a single training trial under any fixed values of the hyperparameters.</span>
+<span class="sd">        For example, after HPO has identified the best hyperparameter values based on a hold-out dataset,</span>
+<span class="sd">        one can use this function to retrain a model with the same hyperparameters on all the available labeled data</span>
+<span class="sd">        (including the hold out set). It can also returns other objects or states.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_fn</span><span class="p">,</span>
+            <span class="p">{</span><span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="s1">&#39;config&#39;</span><span class="p">:</span> <span class="n">config</span><span class="p">},</span>
+            <span class="n">DistributedResource</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">reporter</span> <span class="o">=</span> <span class="n">FakeReporter</span><span class="p">()</span>
+        <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;reporter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reporter</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_job</span><span class="p">(</span><span class="n">task</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_dict_from_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">Task</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;TASK_ID&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">task_id</span><span class="p">,</span> <span class="s1">&#39;Config&#39;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">]}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;TASK_ID&#39;</span><span class="p">:</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;TASK_ID&#39;</span><span class="p">],</span> <span class="s1">&#39;Config&#39;</span><span class="p">:</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;Config&#39;</span><span class="p">]}</span>
+
+<div class="viewcode-block" id="FIFOScheduler.add_job"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.add_job">[docs]</a>    <span class="k">def</span> <span class="nf">add_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adding a training task to the scheduler.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            task (:class:`autotorch.scheduler.Task`): a new training task</span>
+
+<span class="sd">        Relevant entries in kwargs:</span>
+<span class="sd">            - bracket: HB bracket to be used. Has been sampled in _promote_config</span>
+<span class="sd">            - new_config: If True, task starts new config eval, otherwise it promotes</span>
+<span class="sd">              a config (only if type == &#39;promotion&#39;)</span>
+
+<span class="sd">        Only if new_config == False:</span>
+<span class="sd">            - config_key: Internal key for config</span>
+<span class="sd">            - resume_from: config promoted from this milestone</span>
+<span class="sd">            - milestone: config promoted to this milestone (next from resume_from)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="n">FIFOScheduler</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">is_ready</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">RESOURCE_MANAGER</span><span class="o">.</span><span class="n">_request</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">resources</span><span class="p">)</span>
+        <span class="c1"># reporter</span>
+        <span class="n">reporter</span> <span class="o">=</span> <span class="n">DistStatusReporter</span><span class="p">(</span><span class="n">remote</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;reporter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reporter</span>
+        <span class="c1"># Register pending evaluation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">register_pending</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">])</span>
+        <span class="c1"># main process</span>
+        <span class="n">job</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_start_distributed_job</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">RESOURCE_MANAGER</span><span class="p">)</span>
+        <span class="c1"># reporter thread</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_run_reporter</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">reporter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="p">),</span>
+            <span class="n">daemon</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">rp</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">task_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict_from_task</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="n">task_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Task&#39;</span><span class="p">:</span> <span class="n">task</span><span class="p">,</span> <span class="s1">&#39;Job&#39;</span><span class="p">:</span> <span class="n">job</span><span class="p">,</span> <span class="s1">&#39;ReporterThread&#39;</span><span class="p">:</span> <span class="n">rp</span><span class="p">})</span>
+        <span class="c1"># checkpoint thread</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_checkpoint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">_save_checkpoint_callback</span><span class="p">(</span><span class="n">fut</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cleaning_tasks</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="n">job</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="n">_save_checkpoint_callback</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">LOCK</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scheduled_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task_dict</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_clean_task_internal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_dict</span><span class="p">):</span>
+        <span class="n">task_dict</span><span class="p">[</span><span class="s1">&#39;ReporterThread&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_run_reporter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">task_job</span><span class="p">,</span> <span class="n">reporter</span><span class="p">,</span> <span class="n">searcher</span><span class="p">):</span>
+        <span class="n">last_result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">task_job</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+            <span class="n">reported_result</span> <span class="o">=</span> <span class="n">reporter</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">&#39;traceback&#39;</span> <span class="ow">in</span> <span class="n">reported_result</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">reported_result</span><span class="p">[</span><span class="s1">&#39;traceback&#39;</span><span class="p">])</span>
+                <span class="n">reporter</span><span class="o">.</span><span class="n">move_on</span><span class="p">()</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">reported_result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;done&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="n">reporter</span><span class="o">.</span><span class="n">move_on</span><span class="p">()</span>
+                <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_training_result</span><span class="p">(</span>
+                <span class="n">task</span><span class="o">.</span><span class="n">task_id</span><span class="p">,</span> <span class="n">reported_result</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">])</span>
+            <span class="n">reporter</span><span class="o">.</span><span class="n">move_on</span><span class="p">()</span>
+            <span class="n">last_result</span> <span class="o">=</span> <span class="n">reported_result</span>
+        <span class="k">if</span> <span class="n">last_result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">last_result</span><span class="p">[</span><span class="s1">&#39;done&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">searcher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">=</span><span class="n">task</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">],</span>
+                <span class="n">reward</span><span class="o">=</span><span class="n">last_result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_reward_attr</span><span class="p">],</span>
+                <span class="o">**</span><span class="n">last_result</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_promote_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provides a hook in schedule_next, which allows to promote a config</span>
+<span class="sd">        which has been selected and partially evaluated previously.</span>
+
+<span class="sd">        :return: config, extra_args</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">extra_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">config</span><span class="p">,</span> <span class="n">extra_args</span>
+
+<div class="viewcode-block" id="FIFOScheduler.get_best_config"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.get_best_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the best configuration from the finished jobs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_best_config</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FIFOScheduler.get_best_reward"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.get_best_reward">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_reward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the best reward from the finished jobs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">get_best_reward</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_add_training_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">reported_result</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_lock</span><span class="p">:</span>
+            <span class="c1"># Note: We store all of reported_result in training_history[task_id],</span>
+            <span class="c1"># not just the reward value.</span>
+            <span class="k">if</span> <span class="n">task_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_history</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">training_history</span><span class="p">[</span><span class="n">task_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reported_result</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">training_history</span><span class="p">[</span><span class="n">task_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">reported_result</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">config_history</span><span class="p">[</span><span class="n">task_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span>
+
+<div class="viewcode-block" id="FIFOScheduler.get_training_curves"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.get_training_curves">[docs]</a>    <span class="k">def</span> <span class="nf">get_training_curves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_legend</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get Training Curves</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            filename : str</span>
+<span class="sd">            plot : bool</span>
+<span class="sd">            use_legend : bool</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; scheduler.run()</span>
+<span class="sd">        &gt;&gt;&gt; scheduler.join_jobs()</span>
+<span class="sd">        &gt;&gt;&gt; scheduler.get_training_curves(plot=True)</span>
+
+<span class="sd">            .. image:: https://github.com/zhanghang1989/AutoGluonWebdata/blob/master/doc/api/autogluon.1.png?raw=true</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">plot</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Please either provide filename or allow plot in get_training_curves&#39;</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_reward_attr</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_time_attr</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Performance vs Training-Time in each HPO Trial&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_lock</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">task_res</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_history</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">rewards</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_reward_attr</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">task_res</span><span class="p">]</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">task_res</span><span class="p">)))</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rewards</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;task </span><span class="si">{task_id}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">use_legend</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Saving Training Curve in </span><span class="si">{filename}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="FIFOScheduler.state_dict"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a dictionary containing a whole state of the Scheduler</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; at.save(scheduler.state_dict(), &#39;checkpoint.ag&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">destination</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+        <span class="n">destination</span><span class="p">[</span><span class="s1">&#39;searcher&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">searcher</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_lock</span><span class="p">:</span>
+            <span class="n">destination</span><span class="p">[</span><span class="s1">&#39;training_history&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_history</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span> <span class="o">==</span> <span class="s1">&#39;mxboard&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span> <span class="o">==</span> <span class="s1">&#39;tensorboard&#39;</span><span class="p">:</span>
+            <span class="n">destination</span><span class="p">[</span><span class="s1">&#39;visualizer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mxboard</span><span class="o">.</span><span class="n">_scalar_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">destination</span></div>
+
+<div class="viewcode-block" id="FIFOScheduler.load_state_dict"><a class="viewcode-back" href="../../../api/scheduler.html#autotorch.scheduler.FIFOScheduler.load_state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load from the saved state dict.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; scheduler.load_state_dict(at.load(&#39;checkpoint.ag&#39;))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">state_dict</span><span class="p">[</span><span class="s1">&#39;searcher&#39;</span><span class="p">])</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">training_history</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">state_dict</span><span class="p">[</span><span class="s1">&#39;training_history&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span> <span class="o">==</span> <span class="s1">&#39;mxboard&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">visualizer</span> <span class="o">==</span> <span class="s1">&#39;tensorboard&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mxboard</span><span class="o">.</span><span class="n">_scalar_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">state_dict</span><span class="p">[</span><span class="s1">&#39;visualizer&#39;</span><span class="p">])</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Loading Searcher State </span><span class="si">{self.searcher}</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+             </article>
+             
+            </div>
+            <footer>
+  
+
+  
+
+    <hr class="helpful-hr hr-top">
+      <div class="helpful-container">
+        <div class="helpful-question">Was this helpful?</div>
+        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
+        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
+        <div class="was-helpful-thank-you">Thank you</div>
+      </div>
+    <hr class="helpful-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stacy Yang.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+    
+
+  <!--  -->
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+         <script src="../../../_static/jquery.js"></script>
+         <script src="../../../_static/underscore.js"></script>
+         <script src="../../../_static/doctools.js"></script>
+         <script src="../../../_static/language_data.js"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!--div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for AutoTorch</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="#">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div-->
+
+  <!--footer class="site-footer">
+  </footer-->
+
+  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="http://autotorch.org/" aria-label="AutoTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <!--div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          
+          <li class="active">
+            <a href="http://autotorch.org/">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="http://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div-->
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../../../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

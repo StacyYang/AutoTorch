@@ -1,0 +1,537 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Distributed Search on Dedicated Machines &mdash; AutoTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Distributed Search" href="distributed.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://autotorch.org/" aria-label="AutoTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <!--li class="active">
+            <a href="https://autotorch.org//tutorials">Tutorials</a>
+          </li-->
+
+          <li>
+            <a href="https://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  master (0.0.2b20200514)
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/core.html">autotorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/scheduler.html">autotorch.scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/searcher.html">autotorch.searcher</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Learning AutoTorch</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="course.html">Learning AutoTorch: A 30 Minutes Course</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="distributed.html">Distributed Search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="distributed.html">Distributed Search</a> &gt;</li>
+        
+      <li>Distributed Search on Dedicated Machines</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/course/dedicated_machines.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">course/dedicated_machines</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="section" id="distributed-search-on-dedicated-machines">
+<h1>Distributed Search on Dedicated Machines<a class="headerlink" href="#distributed-search-on-dedicated-machines" title="Permalink to this headline">¶</a></h1>
+<p>AutoTorch provide a seamless experience for distributing the hyperparameter search across multiple machines.  It will automatically schedule tasks onto remote machines, just like the local one. All communications are automatically handled such that it looks like a big machine with many GPUs to the user.  This is a quick tutorial for setting up AutoTorch to leverage discributed compute resources.</p>
+<div class="section" id="quick-example">
+<h2>Quick Example<a class="headerlink" href="#quick-example" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>Import the packages:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">autotorch</span> <span class="k">as</span> <span class="nn">at</span>
+</pre></div>
+</div>
+<p>Construct a fake training function for demo</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@at</span><span class="o">.</span><span class="n">args</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">lr</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">wd</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">5e-4</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">train_fn</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">reporter</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;task_id: </span><span class="si">{}</span><span class="s1">, lr: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">task_id</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">lr</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">top1_accuracy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">e</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">reporter</span><span class="p">(</span><span class="n">epoch</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="n">top1_accuracy</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># wait for 1 sec</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create a Random Searcher</p>
+<p>Provide a list of ip addresses for remote machines</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">extra_node_ips</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;172.31.3.95&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Create a distributed scheduler. If no ip addresses are provided, the
+scheduler will only use local resources.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">FIFOScheduler</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">train_fn</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">resource</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_cpus&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;num_gpus&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">dist_ip_addrs</span><span class="o">=</span><span class="n">extra_node_ips</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">scheduler</span><span class="p">)</span>
+<span class="go">FIFOScheduler(</span>
+<span class="go">DistributedResourceManager{</span>
+<span class="go">(Remote: Remote REMOTE_ID: 0,</span>
+<span class="go">    &lt;Remote: &#39;inproc://172.31.8.238/13943/1&#39; processes=1 threads=8, memory=64.39 GB&gt;, Resource: NodeResourceManager(8 CPUs, 0 GPUs))</span>
+<span class="go">(Remote: Remote REMOTE_ID: 1,</span>
+<span class="go">    &lt;Remote: &#39;tcp://172.31.3.95:8702&#39; processes=1 threads=8, memory=64.39 GB&gt;, Resource: NodeResourceManager(8 CPUs, 0 GPUs))</span>
+<span class="go">})</span>
+</pre></div>
+</div>
+<p>Launch 16 Tasks.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">num_trials</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">join_jobs</span><span class="p">()</span>
+<span class="go">task_id: 1, lr: 0.0019243442240350372</span>
+<span class="go">task_id: 2, lr: 0.012385569699754519</span>
+<span class="go">task_id: 3, lr: 0.003945872233665647</span>
+<span class="go">task_id: 4, lr: 0.01951486073903548</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 5, lr: 0.0006863718061933437</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 6, lr: 0.0016683650246923202</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 8, lr: 0.002783313777111095</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 7, lr: 0.0007292676946893176</span>
+<span class="go">task_id: 9, lr: 0.08801928898220206</span>
+<span class="go">task_id: 10, lr: 0.00026549633634006164</span>
+<span class="go">task_id: 11, lr: 0.0009921995657417575</span>
+<span class="go">task_id: 12, lr: 0.08505721989904058</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 13, lr: 0.04110913307416062</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 14, lr: 0.011746795144325337</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 15, lr: 0.007642844613083028</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 16, lr: 0.027900984694448027</span>
+<span class="go">task_id: 17, lr: 0.018628729952415407</span>
+<span class="go">task_id: 18, lr: 0.08050303425485368</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 19, lr: 0.0011754365928443049</span>
+<span class="go">[ worker 172.31.3.95 ] : task_id: 20, lr: 0.008654237222679136</span>
+</pre></div>
+</div>
+<p>Plot the results and exit.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scheduler</span><span class="o">.</span><span class="n">get_training_curves</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="https://github.com/zhanghang1989/AutoGluonWebdata/blob/master/docs/tutorial/course.distributed.png?raw=true" src="https://github.com/zhanghang1989/AutoGluonWebdata/blob/master/docs/tutorial/course.distributed.png?raw=true" />
+</div>
+</div>
+<div class="section" id="system-implementation-logic">
+<h2>System Implementation Logic<a class="headerlink" href="#system-implementation-logic" title="Permalink to this headline">¶</a></h2>
+<img alt="https://raw.githubusercontent.com/zhanghang1989/AutoGluonWebdata/master/doc/api/autogluon_distributed.png" src="https://raw.githubusercontent.com/zhanghang1989/AutoGluonWebdata/master/doc/api/autogluon_distributed.png" />
+<p>The main training script (main Python file) is serialized and scheduled remotely.
+AutoTorch’s distributed scheduler monitors the training process and gathers results.</p>
+<p>Any files (such as Python scripts and datasets) beyond the main training script need to
+be made accessible. We recommand the following practice:</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">scheduler.upload_files(files_list)</span></code> to upload individual Python scripts or small datasets to the execution folder on remote machines, so that the main script can import or load these.</p></li>
+<li><p>Make a Python library for many files in the same folder and install it manually on all remote machines.</p></li>
+<li><p>Upload large files (such as datasets) manually to remote machines and share the same absolute filepath, because the tasks can be scheduled to different machines.</p></li>
+</ul>
+</div>
+<div class="section" id="distributed-training-setup-on-aws-ec2">
+<h2>Distributed Training Setup on AWS EC2<a class="headerlink" href="#distributed-training-setup-on-aws-ec2" title="Permalink to this headline">¶</a></h2>
+<p>We will first set up two machines, one master machine and one worker machine.
+Then we may use EC2 AMI to clone as many worker machines as you want.</p>
+<ul>
+<li><p>Create two EC2 instances in the same zone for speed purpose, using AWS Deep Learnng AMI (optional). Make sure the SSH port and All TCP ports are open (0 - 65535) in your security group. You may refer to this <a class="reference external" href="http://cs231n.github.io/aws-tutorial/">tutorial</a> , if you don’t have the experience using AWS EC2.</p></li>
+<li><p>Install AutoTorch on each machine. If you have other dependencies in your customized training scripts, please also install them.</p></li>
+<li><p>Make the worker machine accessible by the master machine through ssh. The following steps may be needed:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Generate ssh key by executing <cite>ssh-keygen</cite> on master machine.</p></li>
+<li><p>Copy the public key from master machine <cite>cat ~/.ssh/id_rsa.pub</cite> and paste the terminal output to the worker machine <cite>~/.ssh/authorized_keys</cite>.</p></li>
+<li><p><cite>ssh worker_ip_address</cite> to the worker machine through master. (Note that the worker ip address can be found at the terminal, for example <cite>ubuntu&#64;ip-172-31-23-33</cite> means the ip address is <cite>172.31.23.33</cite>)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Upload the datasets or large files to each machines if needed.</p></li>
+<li><p>Create EC2 image of the worker machine, and use that to create more worker machines if needed.</p></li>
+<li><p>You are all set for running experiments. Just provide the list of remote ip addresses to the scheduler.</p></li>
+</ul>
+<p>If the above steps are too complicated for you, please see our tutorial using AWS SageMaker.</p>
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="distributed.html" class="btn btn-neutral" title="Distributed Search" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr class="helpful-hr hr-top">
+      <div class="helpful-container">
+        <div class="helpful-question">Was this helpful?</div>
+        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
+        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
+        <div class="was-helpful-thank-you">Thank you</div>
+      </div>
+    <hr class="helpful-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stacy Yang.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+    
+
+  <!--  -->
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Distributed Search on Dedicated Machines</a><ul>
+<li><a class="reference internal" href="#quick-example">Quick Example</a></li>
+<li><a class="reference internal" href="#system-implementation-logic">System Implementation Logic</a></li>
+<li><a class="reference internal" href="#distributed-training-setup-on-aws-ec2">Distributed Training Setup on AWS EC2</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/language_data.js"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!--div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for AutoTorch</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="#">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div-->
+
+  <!--footer class="site-footer">
+  </footer-->
+
+  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="http://autotorch.org/" aria-label="AutoTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <!--div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          
+          <li class="active">
+            <a href="http://autotorch.org/">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="http://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div-->
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>

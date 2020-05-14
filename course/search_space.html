@@ -1,0 +1,741 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Search Space and Decorator &mdash; AutoTorch master documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Experiment Scheduler using HPO Algorithms" href="hpo_algorithms.html" />
+    <link rel="prev" title="Learning AutoTorch: A 30 Minutes Course" href="course.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href="https://autotorch.org/" aria-label="AutoTorch"></a>
+
+      <div class="main-menu">
+        <ul>
+          <!--li class="active">
+            <a href="https://autotorch.org//tutorials">Tutorials</a>
+          </li-->
+
+          <li>
+            <a href="https://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+
+  </div>
+</div>
+
+
+<body class="pytorch-body">
+
+   
+
+    
+
+    <div class="table-of-contents-link-wrapper">
+      <span>Table of Contents</span>
+      <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+    </div>
+
+    <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+      <div class="pytorch-side-scroll">
+        <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          <div class="pytorch-left-menu-search">
+            
+
+            
+              
+              
+                <div class="version">
+                  master (0.0.2b20200514)
+                </div>
+              
+            
+
+            
+
+
+  
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Tutorials" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+            
+          </div>
+
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/core.html">autotorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/scheduler.html">autotorch.scheduler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/searcher.html">autotorch.searcher</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Learning AutoTorch</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="course.html">Learning AutoTorch: A 30 Minutes Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">Distributed Search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <div class="pytorch-container">
+      <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+        <div class="pytorch-breadcrumbs-wrapper">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../index.html">
+          
+            Tutorials
+          
+        </a> &gt;
+      </li>
+
+        
+          <li><a href="course.html">Learning AutoTorch: A 30 Minutes Course</a> &gt;</li>
+        
+      <li>Search Space and Decorator</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/course/search_space.rst.txt" rel="nofollow"><img src="../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+        </div>
+
+        <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+          Shortcuts
+        </div>
+      </div>
+
+      <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+        <div class="pytorch-content-left">
+
+        
+
+          <div class="pytorch-call-to-action-links">
+            <div id="tutorial-type">course/search_space</div>
+
+            <div id="google-colab-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-colab.svg"/>
+              <div class="call-to-action-desktop-view">Run in Google Colab</div>
+              <div class="call-to-action-mobile-view">Colab</div>
+            </div>
+            <div id="download-notebook-link">
+              <img class="call-to-action-notebook-img" src="../_static/images/pytorch-download.svg"/>
+              <div class="call-to-action-desktop-view">Download Notebook</div>
+              <div class="call-to-action-mobile-view">Notebook</div>
+            </div>
+            <div id="github-view-link">
+              <img class="call-to-action-img" src="../_static/images/pytorch-github.svg"/>
+              <div class="call-to-action-desktop-view">View on GitHub</div>
+              <div class="call-to-action-mobile-view">GitHub</div>
+            </div>
+          </div>
+
+        
+          
+          <div class="rst-content">
+          
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+             <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+              
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-course-search-space-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="search-space-and-decorator">
+<span id="sphx-glr-course-search-space-py"></span><h1>Search Space and Decorator<a class="headerlink" href="#search-space-and-decorator" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial explains the supported search spaces and how to use them, including
+simple search spaces (Int, Real, Bool and Choice) and nested search spaces
+(Choice, List, Dict). Each search space describes the set of possible values for a hyperparameter, from which the searcher will try particular values during hyperparameter optimization. AutoTorch also enables search spaces in user-defined objects using the decorator
+<cite>at.obj</cite> and user-defined functions using the decorator <cite>at.func</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autotorch</span> <span class="k">as</span> <span class="nn">at</span>
+</pre></div>
+</div>
+<div class="section" id="search-space">
+<h2>Search Space<a class="headerlink" href="#search-space" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="simple-search-space">
+<h3>Simple Search Space<a class="headerlink" href="#simple-search-space" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Integer Space <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.Int</span></code></p></li>
+</ul>
+<p>An integer is chosen between lower and upper value during the searcher sampling.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Int: lower=0, upper=10
+</pre></div>
+</div>
+<p>Get default value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>5
+</pre></div>
+</div>
+<p>Change default value, which is the first configuration that a random searcher
+<a class="reference internal" href="../api/searcher.html#autotorch.searcher.RandomSearcher" title="autotorch.searcher.RandomSearcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.searcher.RandomSearcher</span></code></a> will try:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+<p>Pick a random value.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">rand</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Real Space <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.Real</span></code></p></li>
+</ul>
+<p>A real number is chosen between lower and upper value during the
+searcher sampling.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Real: lower=0.0001, upper=0.01
+</pre></div>
+</div>
+<p>Real space in log scale:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Real: lower=0.0001, upper=0.01
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Choice Space <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.Choice</span></code></p></li>
+</ul>
+<p>Choice Space chooses one value from all the possible values during the searcher sampling.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Choice[&#39;Monday&#39;, &#39;Tuesday&#39;, &#39;Wednesday&#39;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="nested-search-space">
+<h3>Nested Search Space<a class="headerlink" href="#nested-search-space" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Choice Space <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.Choice</span></code></p></li>
+</ul>
+<p>Choice Space can also be used as a nested search space.
+For an example, see <a class="reference internal" href="#nestedexampleobj">NestedExampleObj</a>.</p>
+<ul class="simple">
+<li><p>List Space <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.List</span></code></p></li>
+</ul>
+<p>List Space returns a list of sampled results.
+In this example, the first element of the list is a Int Space sampled
+from 0 to 3, and the second element is a Choice Space sampled from the choices of <cite>‘alpha’</cite> and <cite>‘beta’</cite>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+        <span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>List[Int: lower=0, upper=3, Choice[&#39;alpha&#39;, &#39;beta&#39;]]
+</pre></div>
+</div>
+<p>Get one example configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">rand</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[3, &#39;beta&#39;]
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Dict Space <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.Dict</span></code></p></li>
+</ul>
+<p>Dict Space returns a dict of sampled results.
+Similar to List Space, the resulting configuraton of Dict is
+a dict. In this example, the value of <cite>‘key1’</cite> is sampled from
+a Choice Space with the choices of <cite>‘alpha’</cite> and <cite>‘beta’</cite>,
+and the value of <cite>‘key2’</cite> is sampled from an Int Space between
+0 and 3.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span>
+        <span class="n">key1</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">),</span>
+        <span class="n">key2</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="n">key3</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Dict{&#39;key1&#39;: Choice[&#39;alpha&#39;, &#39;beta&#39;], &#39;key2&#39;: Int: lower=0, upper=3, &#39;key3&#39;: &#39;constant&#39;}
+</pre></div>
+</div>
+<p>Get one example configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">rand</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;key1&#39;: &#39;beta&#39;, &#39;key2&#39;: 3, &#39;key3&#39;: &#39;constant&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="decorators-for-searchbale-object-and-customized-training-scripts">
+<h2>Decorators for Searchbale Object and Customized Training Scripts<a class="headerlink" href="#decorators-for-searchbale-object-and-customized-training-scripts" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we show how to insert search space into customized objects and training functions.</p>
+<ul class="simple">
+<li><p>Searchable Space in Customized Class <a class="reference internal" href="../api/core.html#autotorch.obj" title="autotorch.obj"><code class="xref py py-func docutils literal notranslate"><span class="pre">autotorch.obj()</span></code></a></p></li>
+</ul>
+<p>In AutoTorch searchable object can be returned by a user defined class with a decorator.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@at</span><span class="o">.</span><span class="n">obj</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;gluon&#39;</span><span class="p">),</span>
+    <span class="n">static_value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">rank</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="k">class</span> <span class="nc">MyObj</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">static_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">static_value</span> <span class="o">=</span> <span class="n">static_value</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">repr</span> <span class="o">=</span> <span class="s1">&#39;MyObj -- name: </span><span class="si">{}</span><span class="s1">, rank: </span><span class="si">{}</span><span class="s1">, static_value: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">repr</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">MyObj</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>AutoTorchObject -- MyObj
+</pre></div>
+</div>
+<p>Get one example random object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">rand</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>MyObj -- name: gluon, rank: 2, static_value: 10
+</pre></div>
+</div>
+<p>We can also use it within a Nested Space such as <code class="xref py py-class docutils literal notranslate"><span class="pre">autotorch.space.Choice</span></code>.
+In this example, the resulting nested space will be sampled from:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nested</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span>
+        <span class="n">at</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span>
+                <span class="n">obj1</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+                <span class="n">obj2</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span>
+            <span class="p">),</span>
+        <span class="n">MyObj</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">nested</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Choice[Dict{&#39;obj1&#39;: &#39;1&#39;, &#39;obj2&#39;: Choice[&#39;a&#39;, &#39;b&#39;]}, AutoTorchObject -- MyObj]
+</pre></div>
+</div>
+<p>Get an example output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">nested</span><span class="o">.</span><span class="n">rand</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;obj2&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>MyObj -- name: auto, rank: 5, static_value: 10
+{&#39;obj1&#39;: &#39;1&#39;, &#39;obj2&#39;: &#39;b&#39;}
+MyObj -- name: gluon, rank: 3, static_value: 10
+MyObj -- name: gluon, rank: 5, static_value: 10
+MyObj -- name: gluon, rank: 5, static_value: 10
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Searchable Space in Customized Function <a class="reference internal" href="../api/core.html#autotorch.obj" title="autotorch.obj"><code class="xref py py-func docutils literal notranslate"><span class="pre">autotorch.obj()</span></code></a></p></li>
+</ul>
+<p>We can also insert a searchable space in a customized function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@at</span><span class="o">.</span><span class="n">func</span><span class="p">(</span>
+    <span class="n">framework</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;mxnet&#39;</span><span class="p">,</span> <span class="s1">&#39;pytorch&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">framework</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">framework</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">myfunc</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>AutoTorchObject
+</pre></div>
+</div>
+<p>We can also put a searchable space inside a nested space:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">j</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span>
+        <span class="n">a</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+        <span class="n">obj1</span><span class="o">=</span><span class="n">MyObj</span><span class="p">(),</span>
+        <span class="n">obj2</span><span class="o">=</span><span class="n">myfunc</span><span class="p">(),</span>
+    <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Dict{&#39;a&#39;: Real: lower=0, upper=10, &#39;obj1&#39;: AutoTorchObject -- MyObj, &#39;obj2&#39;: AutoTorchObject}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Customized Train Script Using <a class="reference internal" href="../api/core.html#autotorch.args" title="autotorch.args"><code class="xref py py-func docutils literal notranslate"><span class="pre">autotorch.args()</span></code></a></p></li>
+</ul>
+<p><cite>train_func</cite> is where to put your model training script, which takes in various keyword <cite>args</cite> as its hyperparameters and reports the performance of the trained model using the provided <cite>reporter</cite>. Here, we show a dummy train_func that simply prints these objects.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@at</span><span class="o">.</span><span class="n">args</span><span class="p">(</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">b</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">),</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">),</span>
+    <span class="n">e</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Bool</span><span class="p">(),</span>
+    <span class="n">f</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+            <span class="n">at</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="n">g</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span>
+            <span class="n">a</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Real</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+            <span class="n">obj</span><span class="o">=</span><span class="n">MyObj</span><span class="p">(),</span>
+        <span class="p">),</span>
+    <span class="n">h</span><span class="o">=</span><span class="n">at</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">MyObj</span><span class="p">()),</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">myfunc</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">train_fn</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">reporter</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;args: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-searcher-and-run-with-a-configuration">
+<h2>Create Searcher and Run with a Configuration<a class="headerlink" href="#create-searcher-and-run-with-a-configuration" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we create a Searcher object, which orchestrates a particular hyperparameter-tuning strategy.</p>
+<ul class="simple">
+<li><p>Create a Searcher and Sample Configuration</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">searcher</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="n">searcher</span><span class="o">.</span><span class="n">RandomSearcher</span><span class="p">(</span><span class="n">train_fn</span><span class="o">.</span><span class="n">cs</span><span class="p">)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">searcher</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;a&#39;: 6, &#39;b&#39;: 0.0055, &#39;c&#39;: 0.0031622777, &#39;d.choice&#39;: 0, &#39;e.choice&#39;: 0, &#39;f.0&#39;: 2, &#39;f.1.choice&#39;: 0, &#39;g.a&#39;: 5.0, &#39;g.obj.name.choice&#39;: 0, &#39;g.obj.rank&#39;: 4, &#39;h.1.name.choice&#39;: 0, &#39;h.1.rank&#39;: 4, &#39;h.choice&#39;: 0, &#39;i.framework.choice&#39;: 0}
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Run one training job with the sampled configuration:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train_fn</span><span class="p">(</span><span class="n">train_fn</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>args: {&#39;a&#39;: 6, &#39;b&#39;: 0.0055, &#39;c&#39;: 0.0031622777, &#39;d&#39;: &#39;a&#39;, &#39;e&#39;: True, &#39;f&#39;: [2, 4], &#39;g&#39;: {&#39;a&#39;: 5.0, &#39;obj&#39;: MyObj -- name: auto, rank: 4, static_value: 10}, &#39;h&#39;: &#39;test&#39;, &#39;i&#39;: &#39;mxnet&#39;, &#39;_default_config&#39;: {}}
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.114 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-course-search-space-py">
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/be48fb644052a045db8ee9c00d9049be/search_space.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">search_space.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/0a0fe9233a0111f6fc1ba8826b39a133/search_space.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">search_space.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+             </article>
+             
+            </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hpo_algorithms.html" class="btn btn-neutral float-right" title="Experiment Scheduler using HPO Algorithms" accesskey="n" rel="next">Next <img src="../_static/images/chevron-right-orange.svg" class="next-page"></a>
+      
+      
+        <a href="course.html" class="btn btn-neutral" title="Learning AutoTorch: A 30 Minutes Course" accesskey="p" rel="prev"><img src="../_static/images/chevron-right-orange.svg" class="previous-page"> Previous</a>
+      
+    </div>
+  
+
+  
+
+    <hr class="helpful-hr hr-top">
+      <div class="helpful-container">
+        <div class="helpful-question">Was this helpful?</div>
+        <div class="helpful-question yes-link" data-behavior="was-this-helpful-event" data-response="yes">Yes</div>
+        <div class="helpful-question no-link" data-behavior="was-this-helpful-event" data-response="no">No</div>
+        <div class="was-helpful-thank-you">Thank you</div>
+      </div>
+    <hr class="helpful-hr hr-bottom"/>
+
+  
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Stacy Yang.
+
+    </p>
+  </div>
+    
+      <div>
+        Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+      </div>
+    
+
+  <!--  -->
+
+</footer>
+
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Search Space and Decorator</a><ul>
+<li><a class="reference internal" href="#search-space">Search Space</a><ul>
+<li><a class="reference internal" href="#simple-search-space">Simple Search Space</a></li>
+<li><a class="reference internal" href="#nested-search-space">Nested Search Space</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decorators-for-searchbale-object-and-customized-training-scripts">Decorators for Searchbale Object and Customized Training Scripts</a></li>
+<li><a class="reference internal" href="#create-searcher-and-run-with-a-configuration">Create Searcher and Run with a Configuration</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  
+
+
+  
+
+     
+       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+         <script src="../_static/jquery.js"></script>
+         <script src="../_static/underscore.js"></script>
+         <script src="../_static/doctools.js"></script>
+         <script src="../_static/language_data.js"></script>
+     
+
+  
+
+  <script type="text/javascript" src="../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../_static/js/vendor/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <!--div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center">
+          <h2>Docs</h2>
+          <p>Access comprehensive developer documentation for AutoTorch</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Docs</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Tutorials</h2>
+          <p>Get in-depth tutorials for beginners and advanced developers</p>
+          <a class="with-right-arrow" href="http://autotorch.org/">View Tutorials</a>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <h2>Resources</h2>
+          <p>Find development resources and get your questions answered</p>
+          <a class="with-right-arrow" href="#">View Resources</a>
+        </div>
+      </div>
+    </div>
+  </div-->
+
+  <!--footer class="site-footer">
+  </footer-->
+
+  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="http://autotorch.org/" aria-label="AutoTorch"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <!--div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          
+          <li class="active">
+            <a href="http://autotorch.org/">Tutorials</a>
+          </li>
+
+          <li>
+            <a href="http://autotorch.org/">Docs</a>
+          </li>
+
+          <li>
+            <a href="https://github.com/StacyYang/AutoTorch">Github</a>
+          </li>
+        </ul>
+      </div>
+    </div-->
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function(e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+</html>
