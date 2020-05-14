@@ -211,11 +211,6 @@ class BayesOptSearcher(BaseSearcher):
         if not succeed:
             idx = ys.argmax()
             while pickle.dumps(self._format_configs(x_max)) in self._results.keys():
-                #np.delete(x_tries, idx, 0)
-                #np.delete(ys, idx, 0)
-                #idx = ys.argmax()
-                #x_max = x_tries[idx]
-                #x_max = np.clip(x_max, bounds[:, 0], bounds[:, 1])
                 x_tries = self._random_state.uniform(bounds[:, 0], bounds[:, 1],
                                                      size=(n_warmup, bounds.shape[0]))
                 ys = self.acquisition(x_tries, y_max=y_max)

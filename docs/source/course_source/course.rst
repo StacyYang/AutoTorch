@@ -12,4 +12,4 @@ Goals of this tutorial:
 
    search_space
    hpo_algorithms
-    
+   searcher 
