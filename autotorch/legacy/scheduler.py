@@ -49,7 +49,9 @@ class TaskScheduler(object):
         """
         logger.debug('Scheduling A Task: {}'.format(args))
         if resources.num_gpus > 0:
-            os.environ['CUDA_VISIBLE_DEVICES'] = ",".join(map(str,resources.gpu_ids))
+            #os.environ['CUDA_VISIBLE_DEVICES'] = ",".join(map(str, resources.gpu_ids))
+            args['args'].update(gpu_ids=resources.gpu_ids)
+        #print('Scheduler._run_task ------ args:', args)
         try:
             fn(**args)
         except Exception as e:

@@ -1,8 +1,10 @@
 import os
+import time
 import pickle
 import json
 import logging
 import threading
+from tqdm import tqdm
 import multiprocessing as mp
 from collections import OrderedDict
 
@@ -83,7 +85,7 @@ class FIFO_Scheduler(TaskScheduler):
         logger.info('Starting Experiments')
         logger.info('Num of Finished Tasks is {}'.format(self.num_finished_tasks))
         logger.info('Num of Pending Tasks is {}'.format(self.num_trials - self.num_finished_tasks))
-        tbar = trange(self.num_finished_tasks, self.num_trials)
+        tbar = tqdm(range(self.num_finished_tasks, self.num_trials))
         for _ in tbar:
             if time_out and time.time() - start_time >= time_out \
                     or self.max_reward and self.get_best_reward() >= self.max_reward:
@@ -121,8 +123,8 @@ class FIFO_Scheduler(TaskScheduler):
                                            'task{}_state_dict.ag'.format(task.task_id))
             reporter = StatusReporter(state_dict_path)
             task.args['reporter'] = reporter
-            task.args['task_id'] = task.task_id
-            task.args['resources'] = task.resources
+            #task.args['task_id'] = task.task_id
+            #task.args['resources'] = task.resources
             # main process
             tp = mp.Process(target=FIFO_Scheduler._run_task, args=(
                             task.fn, task.args, task.resources,

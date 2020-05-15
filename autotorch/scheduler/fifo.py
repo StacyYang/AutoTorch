@@ -108,6 +108,8 @@ class FIFOScheduler(TaskScheduler):
         self.num_trials = num_trials
         self.time_out = time_out
         self.max_reward = max_reward
+        if checkpoint is not None:
+            mkdir(os.path.dirname(checkpoint))
         self._checkpoint = checkpoint
         self._time_attr = time_attr
         self._reward_attr = reward_attr

@@ -2,6 +2,7 @@
 import os
 import pickle
 import logging
+import traceback
 from warnings import warn
 import multiprocessing as mp
 from collections import OrderedDict
@@ -114,38 +115,12 @@ class TaskScheduler(object):
         if '_default_config' in args['args']:
             args['args'].pop('_default_config')
 
-        if 'reporter' in args:	
-            local_reporter = LocalStatusReporter()	
-            dist_reporter = args['reporter']	
-            args['reporter'] = local_reporter
-
-        manager = mp.Manager()
-        return_list = manager.list()
-        def _worker(return_list, gpu_ids, args):
-            """Worker function in thec client
-            """
-            if len(gpu_ids) > 0:
-                # handle GPU devices
-                os.environ['CUDA_VISIBLE_DEVICES'] = ",".join(map(str, gpu_ids))
-                os.environ['MXNET_CUDNN_AUTOTUNE_DEFAULT'] = "0"
-
-            # running
-            try:
-                ret = fn(**args)
-            except AutoTorchEarlyStop:
-                ret = None
-            return_list.append(ret)
-
         try:
-            # start local progress
-            p = CustomProcess(target=_worker, args=(return_list, gpu_ids, args))
-            p.start()
-            if 'reporter' in args:
-                cp = Communicator.Create(p, local_reporter, dist_reporter)
-            p.join()
+            ret = fn(**args)
         except Exception as e:
+            tb = traceback.format_exc()
+            print(tb)
             logger.error('Exception in worker process: {}'.format(e))
-        ret = return_list[0] if len(return_list) > 0 else None
         return ret
 
     def _clean_task_internal(self, task_dict):
