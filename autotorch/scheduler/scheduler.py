@@ -2,6 +2,7 @@
 import os
 import pickle
 import logging
+import argparse
 import traceback
 from warnings import warn
 import multiprocessing as mp
@@ -99,7 +100,12 @@ class TaskScheduler(object):
         """Async Execute the job in remote and release the resources
         """
         logger.debug('\nScheduling {}'.format(task))
-        task.args['args'].update(gpu_ids=task.resources.gpu_ids)
+        if isinstance(task.args['args'], (argparse.Namespace, argparse.ArgumentParser)):
+            args_dict = vars(task.args['args'])
+        else:
+            args_dict = task.args['args']
+        #task.args['args']
+        args_dict.update(gpu_ids=task.resources.gpu_ids)
         job = task.resources.node.submit(TaskScheduler._run_dist_job,
                                          task.fn, task.args, task.resources.gpu_ids)
         def _release_resource_callback(fut):

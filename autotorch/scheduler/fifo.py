@@ -86,6 +86,7 @@ class FIFOScheduler(TaskScheduler):
             searcher = 'random'  # Default: Random searcher
 
         if isinstance(searcher, str):
+            assert isinstance(train_fn, _autotorch_method)
             kwargs = search_options.copy() if search_options else dict()
             kwargs['configspace'] = train_fn.cs
             self.searcher: BaseSearcher = searcher_factory(searcher, **kwargs)
@@ -93,13 +94,12 @@ class FIFOScheduler(TaskScheduler):
             assert isinstance(searcher, BaseSearcher)
             self.searcher: BaseSearcher = searcher
 
-        assert isinstance(train_fn, _autotorch_method)
         self.train_fn = train_fn
         self.args = args if args else train_fn.args
 
         # meta data
         self.metadata = {
-            'search_space': train_fn.kwspaces,
+            'search_space': train_fn.kwspaces if isinstance(train_fn, _autotorch_method) else {},
             'search_strategy': searcher,
             'stop_criterion': {'time_limits': time_out, 'max_reward': max_reward},
             'resources_per_trial': resource

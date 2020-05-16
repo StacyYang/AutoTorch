@@ -109,7 +109,7 @@ class BayesOptSearcher(BaseSearcher):
             must return a valid configuration
         """
         # fit gp model
-        if len(self._space) == 0:
+        if len(self._space) <= 1:
             if len(self.lazy_space) > 0:
                 idx = np.random.randint(0, len(self.lazy_space))
                 new_config = self._format_configs(self.lazy_space.params[idx])
@@ -148,6 +148,7 @@ class BayesOptSearcher(BaseSearcher):
     def update(self, config, reward, **kwargs):
         """Update the searcher with the newest metric report
         """
+        reward = float(reward)
         super().update(config, reward, **kwargs)
         is_done = kwargs.get('done', False)
         is_terminated = kwargs.get('terminated', False)

@@ -1,6 +1,7 @@
 """Task Scheduler"""
 import os
 import pickle
+import argparse
 import logging
 import argparse
 import multiprocessing as mp
@@ -50,7 +51,11 @@ class TaskScheduler(object):
         logger.debug('Scheduling A Task: {}'.format(args))
         if resources.num_gpus > 0:
             #os.environ['CUDA_VISIBLE_DEVICES'] = ",".join(map(str, resources.gpu_ids))
-            args['args'].update(gpu_ids=resources.gpu_ids)
+            if isinstance(args['args'], (argparse.Namespace, argparse.ArgumentParser)):
+                args_dict = vars(args['args'])
+            else:
+                args_dict = args['args']
+            args_dict.update(gpu_ids=resources.gpu_ids)
         #print('Scheduler._run_task ------ args:', args)
         try:
             fn(**args)
