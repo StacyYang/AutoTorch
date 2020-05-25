@@ -401,14 +401,15 @@ class Int(SimpleSpace):
     >>> range.rand                                                                       
     82
     """
-    def __init__(self, lower, upper, default=None):
+    def __init__(self, lower, upper, default=None, log=False):
         self.lower = lower
         self.upper = upper
+        self.log = log
         self._default = default
 
     def get_hp(self, name):
         return CSH.UniformIntegerHyperparameter(name=name, lower=self.lower, upper=self.upper,
-                                                default_value=self._default)
+                                                default_value=self._default, log=self.log)
 
 class Bool(Choice):
     """Bool Search Space

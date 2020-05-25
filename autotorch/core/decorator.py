@@ -263,7 +263,6 @@ def obj(**kwvars):
                 self._inited = False
 
             def sample(self, **config):
-                print('Sampling AutoGluonObject')
                 kwargs = copy.deepcopy(self.kwargs)
                 kwspaces = copy.deepcopy(autotorchobject.kwspaces)
                 for k, v in kwargs.items():
